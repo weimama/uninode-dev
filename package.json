@@ -1,0 +1,36 @@
+{
+  "name": "raptor-dev",
+  "version": "0.1.0",
+  "description": "Developer tools for RaptorJS",
+  "keywords": [
+    "rapido",
+    "cubejs"
+  ],
+  "scripts": {
+    "test": "node_modules/.bin/mocha --ui bdd --reporter spec ./test && node_modules/.bin/jshint lib && node_modules/.bin/jshint commands"
+  },
+  "readmeFilename": "README.md",
+  "dependencies": {
+    "rapido": "~1.0.0-SNAPSHOT",
+    "raptor-files": "~0.1.0-SNAPSHOT",
+    "raptor-ecma": "~0.1.0-SNAPSHOT",
+    "q": "~0.9.7"
+  },
+  "bin": {
+    "raptor-migrate": "bin/raptor-migrate"
+  },
+  "publishConfig": {
+    "registry": "http://npmjs.stratus.dev.ebay.com:5984/registry/_design/scratch/_rewrite"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.scm.corp.ebay.com:cubejs-ebay/ecube.git"
+  },
+  "devDependencies": {
+    "jshint": "~2.3.0",
+    "mocha": "~1.15.1",
+    "chai": "~1.8.1"
+  },
+  "ebay": {},
+  "private": true
+}

@@ -1,0 +1,10 @@
+{
+    "name": "raptor-migrate",
+    "description": "Commands for migrating to RaptorJS 3",
+    "commands": {
+        "migrate packages": {
+            "description": "Migrate from package.json to optimizer.json",
+            "file": "commands/command-migrate-packages.js"
+        }
+    }
+}

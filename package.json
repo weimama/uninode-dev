@@ -17,7 +17,7 @@
     "q": "~0.9.7"
   },
   "bin": {
-    "raptor-migrate": "bin/raptor-migrate"
+    "raptor-dev": "bin/raptor-dev"
   },
   "publishConfig": {
     "registry": "http://npmjs.stratus.dev.ebay.com:5984/registry/_design/scratch/_rewrite"

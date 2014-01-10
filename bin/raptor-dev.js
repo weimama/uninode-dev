@@ -1,13 +1,17 @@
-if( !process.env.NODE_ENV ) process.env.NODE_ENV = 'development';
+'use strict';
+
+if( !process.env.NODE_ENV ) {
+    process.env.NODE_ENV = 'development';
+}
 
 var path = require('path');
 var fs = require('fs');
 var rapido = require('rapido').create();
 
-rapido.title = 'Commands for migrating to RaptorJS 3';
-rapido.configFilename = "raptor-migrate.json";
+rapido.title = 'Commands for RaptorJS 3 development';
+rapido.configFilename = 'raptor-migrate.json';
 rapido.addStackDir(path.join(__dirname, '..'));
-rapido.enableStack('raptor-migrate');
+rapido.enableStack('raptor-dev');
 
 Object.defineProperty(rapido, 'version', {
     get: function() {

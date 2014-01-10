@@ -1,10 +1,22 @@
 {
-    "name": "raptor-migrate",
+    "name": "raptor-dev",
     "description": "Commands for migrating to RaptorJS 3",
     "commands": {
         "migrate packages": {
             "description": "Migrate from package.json to optimizer.json",
             "file": "commands/command-migrate-packages.js"
+        },
+        "setup": {
+            "description": "Clone all of the raptorjs3 projects and link them together for raptorjs3 development",
+            "file": "commands/command-setup.js"
+        },
+        "dependency graph": {
+            "description": "Prints the Raptor dependency graph",
+            "file": "commands/command-dependency-graph.js"
+        },
+        "repos": {
+            "description": "Lists the Raptor repositories on GitHub",
+            "file": "commands/command-repos.js"
         }
     }
 }

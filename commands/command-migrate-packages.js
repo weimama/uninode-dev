@@ -1,3 +1,5 @@
+'use strict';
+
 require('raptor-ecma/es6');
 
 var nodePath = require('path');
@@ -64,7 +66,7 @@ module.exports = {
 
                 var pkg;
                 try {
-                    pkg = readJsonFile(file.getAbsolutePath());    
+                    pkg = readJsonFile(file.getAbsolutePath());
                 }
                 catch(e) {
                     rapido.log.error('WARN', 'Unable to parse JSON file at path "' + file.getAbsolutePath() + '". Skipping!');

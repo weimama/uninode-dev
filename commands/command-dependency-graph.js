@@ -11,11 +11,16 @@ function indent(str, depth) {
     return result.join('');
 }
 
-function printGraph(moduleNodes, depth) {
+function printGraph(moduleNodes, depth, dev) {
     for (var i = 0; i < moduleNodes.length; i++) {
         var moduleNode = moduleNodes[i];
-        console.log(indent(moduleNode.name, depth));
-        printGraph(moduleNode.dependencies, depth+1);
+
+        var dependencyName = dev ? moduleNode.name + ' (DEV)' : moduleNode.name;
+
+        console.log(indent(dependencyName, depth));
+
+        printGraph(moduleNode.dependencies, depth+1, dev);
+        printGraph(moduleNode.devDependencies, depth+1, true);
     }
 }
 
@@ -30,8 +35,8 @@ module.exports = {
 
     validate: function(args, rapido) {
 
-        args.dir = args._[0];
         args.org = args.org || 'raptorjs3';
+        args.dir = args._[0];
 
         if (args.dir) {
             args.dir = path.resolve(process.cwd(), args.dir);
@@ -47,20 +52,20 @@ module.exports = {
         var reposDir = args.dir;
         var org = args.org;
 
-        require('../lib/github.js').fetchRepos(org, function(err, repos) {
+        require('../lib/github').fetchRepos(org, function(err, repos) {
 
             if (err) {
                 rapido.log.error('Error fetching ' + org + ' repositories using GitHub API.', err);
                 return;
             }
 
-            var dirs = [];
+            var repoDirs = [];
             for (var i = 0; i < repos.length; i++) {
                 var repoDir = path.join(reposDir, repos[i].name);
-                dirs.push(repoDir);
+                repoDirs.push(repoDir);
             }
 
-            var moduleNodes = require('../lib/dependencies.js').dependencyGraph(dirs);
+            var moduleNodes = require('../lib/dependencies').dependencyGraph(repoDirs);
             printGraph(moduleNodes, 0);
         });
     }

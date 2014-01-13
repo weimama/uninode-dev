@@ -14,7 +14,7 @@ module.exports = {
 
         var org = args.org;
 
-        require('../lib/github.js').fetchRepos(org, function(err, repos) {
+        require('../lib/github').fetchRepos(org, function(err, repos) {
 
             if (err) {
                 rapido.log.error('Error fetching ' + org + ' repositories using GitHub API.', err);

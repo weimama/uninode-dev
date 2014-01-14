@@ -14,6 +14,7 @@
     "rapido": "~1.0.0-SNAPSHOT",
     "raptor-files": "~0.1.0-SNAPSHOT",
     "raptor-ecma": "~0.1.0-SNAPSHOT",
+    "raptor-async": "~0.1.0-SNAPSHOT",
     "q": "~0.9.7"
   },
   "bin": {

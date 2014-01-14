@@ -1,8 +1,6 @@
 'use strict';
 
 var path = require('path');
-//var fs = require('fs');
-//var async = require('../lib/async');
 var git = require('../lib/git');
 var npm = require('../lib/npm');
 

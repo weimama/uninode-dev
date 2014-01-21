@@ -65,5 +65,17 @@ describe('raptor-migrate/package-transformer' , function() {
         testTransform('define-class-assign');
     });
 
+    it('should transform module.logger()', function() {
+        testTransform('module-logger');
+    });
+
+    it('should transform define.extend', function() {
+        testTransform('raptor/templating/index_async');
+    });
+
+    it('should transform references to old raptor module', function() {
+        testTransform('old-raptor');
+    });
+
 });
 

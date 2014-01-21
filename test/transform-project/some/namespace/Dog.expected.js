@@ -13,5 +13,5 @@ Dog.prototype = {
         console.log('woof!');
     }
 };
-require('raptor-util').inherit(Dog, require('FIXME_some/namespace/Animal'));
+require('raptor-util').inherit(Dog, require('./Animal'));
 module.exports = Dog;

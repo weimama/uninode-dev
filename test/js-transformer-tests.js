@@ -19,7 +19,8 @@ function testTransform(inputPath) {
     var input = readFile(fullInputPath);
     var expectedOutput = readFile('transform-project/' + inputPath + '.expected.js');
     var transformed = require('../lib/js-transformer').transform(input, {
-        resourceSearchPath: nodePath.join(__dirname, 'transform-project')
+        from: nodePath.dirname(nodePath.join(__dirname, fullInputPath)),
+        searchPath: [nodePath.join(__dirname, 'transform-project')]
     });
 
     writeFile('transform-project/' + inputPath + '.actual.js', transformed);

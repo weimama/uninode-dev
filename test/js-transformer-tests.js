@@ -16,17 +16,20 @@ function writeFile(path, str) {
 
 function testTransform(inputPath) {
     var fullInputPath = 'transform-project/' + inputPath + '.js';
+    var fullActualPath = 'transform-project/' + inputPath + '.actual.js';
+    var fullExpectedPath = 'transform-project/' + inputPath + '.expected.js';
     var input = readFile(fullInputPath);
-    var expectedOutput = readFile('transform-project/' + inputPath + '.expected.js');
+    var expectedOutput = readFile(fullExpectedPath);
     var transformed = require('../lib/js-transformer').transform(input, {
         from: nodePath.dirname(nodePath.join(__dirname, fullInputPath)),
         searchPath: [nodePath.join(__dirname, 'transform-project')]
     });
 
-    writeFile('transform-project/' + inputPath + '.actual.js', transformed);
+    writeFile(fullActualPath, transformed);
 
     if (transformed !== expectedOutput) {
-        throw new Error('Unexpected output for "' + fullInputPath + '":\nEXPECTED:\n---------\n' + expectedOutput + '\n---------\nACTUAL:\n---------\n' + transformed + '\n---------');
+        throw new Error('Unexpected output for "' + fullInputPath + '":\nEXPECTED (' + fullExpectedPath + '):\n---------\n' + expectedOutput +
+            '\n---------\nACTUAL (' + fullActualPath + '):\n---------\n' + transformed + '\n---------');
     }
     // expect(transformed).to.equal(expectedOutput);
 }
@@ -48,6 +51,14 @@ describe('raptor-migrate/package-transformer' , function() {
     it('should transform define.Class with inheritance', function() {
         testTransform('some/namespace/Dog');
         testTransform('some/namespace/Animal');
+    });
+
+    it('should transform define.Class that returns an object', function() {
+        testTransform('ui-components/buttons/SimpleButton/SimpleButtonWidget');
+    });
+
+    it('should transform define for UI component renderer', function() {
+        testTransform('ui-components/buttons/SimpleButton/SimpleButtonRenderer');
     });
 
 });

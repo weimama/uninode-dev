@@ -61,5 +61,9 @@ describe('raptor-migrate/package-transformer' , function() {
         testTransform('ui-components/buttons/SimpleButton/SimpleButtonRenderer');
     });
 
+    it('should transform anonymous define.Class with assignment', function() {
+        testTransform('define-class-assign');
+    });
+
 });
 

@@ -15,7 +15,10 @@
     "raptor-files": "~0.1.0-SNAPSHOT",
     "raptor-ecma": "~0.1.0-SNAPSHOT",
     "raptor-async": "~0.1.0-SNAPSHOT",
-    "q": "~0.9.7"
+    "q": "~0.9.7",
+    "esprima": "~1.0.4",
+    "escodegen": "~1.1.0",
+    "estraverse": "~1.5.0"
   },
   "bin": {
     "raptor-dev": "bin/raptor-dev"

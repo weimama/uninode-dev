@@ -1,0 +1,1 @@
+require('raptor-util').extend(require('target'), { hello: 'world' });

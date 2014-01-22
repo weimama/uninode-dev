@@ -77,5 +77,13 @@ describe('raptor-migrate/package-transformer' , function() {
         testTransform('old-raptor');
     });
 
+    it('should transform define.extend without target argument', function() {
+        testTransform('define-extend');
+    });
+
+    it('should transform define.extend with target argument', function() {
+        testTransform('define-extend-target');
+    });
+
 });
 

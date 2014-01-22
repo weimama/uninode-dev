@@ -1,3 +1,5 @@
 var forEachEntry = require('raptor-util').forEachEntry;
-var extend = require('raptor-util').extend;
+var createError = require('raptor-util').createError;
+var extend = require('raptor').extend;
 forEachEntry({});
+createError(new Error('test'));

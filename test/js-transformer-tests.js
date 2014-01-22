@@ -85,5 +85,9 @@ describe('raptor-migrate/package-transformer' , function() {
         testTransform('define-extend-target');
     });
 
+    it.only('should transform define with object for factory function', function() {
+        testTransform('define-object');
+    });
+
 });
 

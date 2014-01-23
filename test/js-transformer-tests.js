@@ -81,6 +81,7 @@ describe('raptor-migrate/package-transformer' , function() {
 
     it('should transform define.extend without target argument', function() {
         testTransform('define-extend');
+        testTransform('define-extend2');
     });
 
     it('should transform define.extend with target argument', function() {

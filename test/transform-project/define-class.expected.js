@@ -1,6 +1,6 @@
 'use strict';
 var strings = require('raptor-strings');
-var Expression = require('raptor/templating/compiler/Expression');
+var Expression = require('raptor-templates/compiler/Expression');
 function AttributeSplitter() {
 }
 /**

@@ -3,11 +3,16 @@
 require('raptor-ecma/es6');
 var nodePath = require('path');
 var jsTransformer = require('../lib/js-transformer');
+var fs = require('fs');
 
 module.exports = {
     usage: 'Usage: $0 $commandName [dir]',
 
     options: {
+        file: {
+            description: "Only transform a single file",
+            type: "string"
+        }
     },
 
     validate: function(args, rapido) {
@@ -18,9 +23,15 @@ module.exports = {
         else {
             dir = process.cwd();
         }
+
+        var file = args.file;
+        if (file) {
+            file = nodePath.resolve(process.cwd(), file);
+        }
         
         return {
-            dir: dir
+            dir: dir,
+            file: file
         };
     },
 
@@ -28,27 +39,38 @@ module.exports = {
         var dir = args.dir;
 
         var transformOptions = {
-            searchPath: dir
+            searchPath: [dir]
         };
 
-        require('raptor-files/walker').walk(
-            dir,
-            function(file) {
+        function transformFile(file) {
+            var src = fs.readFileSync(file, {encoding: 'utf8'});
+            console.log('Transforming ' + file + '...');
+            transformOptions.from = nodePath.dirname(file);
+            var transformed = jsTransformer.transform(src, transformOptions);
+            fs.writeFileSync(file, transformed, {encoding: 'utf8'});
+        }
 
-                if (file.isDirectory()) {
-                    return;
-                }
-                
-                if (!file.getName().endsWith('.js')) {
-                    return;
-                }
 
-                var src = file.readAsString();
-                console.log('Transforming ' + file.getAbsolutePath() + '...');
-                var transformed = jsTransformer.transform(src, transformOptions);
-                file.writeAsString(transformed);
-                // console.log("TRANSFORMED " + file.getAbsolutePath() + ":\n", transformed + '\n\n');
-            },
-            this);
+        if (args.file) {
+            transformFile(args.file);
+        }
+        else {
+            require('raptor-files/walker').walk(
+                dir,
+                function(file) {
+
+                    if (file.isDirectory()) {
+                        return;
+                    }
+                    
+                    if (!file.getName().endsWith('.js')) {
+                        return;
+                    }
+
+                    transformFile(file.getAbsolutePath());
+                },
+                this);
+        }
+        
     }
 };

@@ -17,6 +17,14 @@
         "repos": {
             "description": "Lists the Raptor repositories on GitHub",
             "file": "commands/command-repos.js"
+        },
+        "migrate javascript": {
+            "description": "Migrate JavaScript code by converting from AMD to CommonJS modules",
+            "file": "commands/command-migrate-javascript.js"
+        },
+        "normalize javascript": {
+            "description": "Regenerates all JavaScript code to ensure consistent code",
+            "file": "commands/command-normalize-javascript.js"
         }
     }
 }

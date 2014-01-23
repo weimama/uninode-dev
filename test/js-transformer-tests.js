@@ -63,6 +63,8 @@ describe('raptor-migrate/package-transformer' , function() {
 
     it('should transform anonymous define.Class with assignment', function() {
         testTransform('define-class-assign');
+        testTransform('define-class-assign2');
+        testTransform('define-class-assign3');
     });
 
     it('should transform module.logger()', function() {
@@ -85,7 +87,7 @@ describe('raptor-migrate/package-transformer' , function() {
         testTransform('define-extend-target');
     });
 
-    it.only('should transform define with object for factory function', function() {
+    it('should transform define with object for factory function', function() {
         testTransform('define-object');
     });
 

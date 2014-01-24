@@ -1,4 +1,7 @@
 'use strict';
+function test() {
+    return { hello: 'world' };
+}
 var strings = require('raptor-strings');
 var Expression = require('raptor-templates/compiler/Expression');
 function AttributeSplitter() {

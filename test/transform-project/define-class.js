@@ -3,6 +3,12 @@ define.Class(
     ['raptor'],
     function(raptor, require) {
         "use strict";
+
+        function test() {
+            return {
+                hello: 'world'
+            };
+        }
         
         var strings = require('raptor/strings'),
             Expression = require('raptor/templating/compiler/Expression');

@@ -34,7 +34,7 @@ function testTransform(inputPath) {
     // expect(transformed).to.equal(expectedOutput);
 }
 
-describe('raptor-migrate/package-transformer' , function() {
+describe('raptor-dev/js-transformer' , function() {
 
     beforeEach(function(done) {
         done();

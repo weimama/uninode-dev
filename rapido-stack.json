@@ -25,6 +25,10 @@
         "normalize javascript": {
             "description": "Regenerates all JavaScript code to ensure consistent code",
             "file": "commands/command-normalize-javascript.js"
+        },
+        "migrate templates": {
+            "description": "Migrate Raptor Template files from XML to HTML",
+            "file": "commands/command-migrate-templates.js"
         }
     }
 }

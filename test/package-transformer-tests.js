@@ -5,7 +5,7 @@ var expect = require('chai').expect;
 
 var packageTransformer = require('../lib/package-transformer');
 
-describe('raptor-migrate/package-transformer' , function() {
+describe('raptor-dev/package-transformer' , function() {
 
     beforeEach(function(done) {
         

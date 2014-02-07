@@ -2,7 +2,7 @@
 
 require('raptor-ecma/es6');
 var nodePath = require('path');
-var jsTransformer = require('../lib/js-transformer');
+var xmlTemplateTransformer = require('../lib/xml-template-transformer');
 var fs = require('fs');
 
 module.exports = {
@@ -43,18 +43,12 @@ module.exports = {
     run: function(args, config, rapido) {
         var dir = args.dir;
 
-        var transformOptions = {
-            searchPath: [dir]
-        };
-
         function transformFile(file) {
             var src = fs.readFileSync(file, {encoding: 'utf8'});
             console.log('Transforming ' + file + '...');
-            transformOptions.from = nodePath.dirname(file);
-            var transformed = jsTransformer.transform(src, transformOptions);
+            var transformed = xmlTemplateTransformer.transform(src);
             fs.writeFileSync(file, transformed, {encoding: 'utf8'});
         }
-
 
         if (args.file) {
             transformFile(args.file);
@@ -63,13 +57,10 @@ module.exports = {
             require('raptor-files/walker').walk(
                 dir,
                 function(file) {
-
                     if (file.isDirectory()) {
                         return;
                     }
                     
-                    
-
                     if (args.rhtmlToRxml) {
                         if (!file.getName().endsWith('.rhtml') && file.getName().indexOf('.rhtml.') === -1) {
                             return;
@@ -87,10 +78,8 @@ module.exports = {
                             return;
                         }
 
-                        // transformFile(file.getAbsolutePath());
+                        transformFile(file.getAbsolutePath());
                     }
-
-                    
                 },
                 this);
         }

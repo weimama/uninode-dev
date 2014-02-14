@@ -9,9 +9,15 @@ module.exports = {
     usage: 'Usage: $0 $commandName [dir]',
 
     options: {
+        'skip-transform-require': {
+            description: 'Skip transforming non-raptor module paths in calls to require() to relative paths',
+            type: 'boolean',
+            default: false
+        },
+
         file: {
-            description: "Only transform a single file",
-            type: "string"
+            description: 'Only transform a single file',
+            type: 'string'
         }
     },
 
@@ -31,25 +37,32 @@ module.exports = {
         
         return {
             dir: dir,
-            file: file
+            searchPath: [dir],
+            file: file,
+
+            skipTransformRequire: args['skip-transform-require']
         };
     },
 
     run: function(args, config, rapido) {
         var dir = args.dir;
 
-        var transformOptions = {
-            searchPath: [dir]
-        };
+        console.log('--------------');
+        console.log('Configuration:');
+        for (var key in args) {
+            console.log(key + ': ' + args[key]);
+        }
+        console.log('--------------');
 
         function transformFile(file) {
             var src = fs.readFileSync(file, {encoding: 'utf8'});
             console.log('Transforming ' + file + '...');
-            transformOptions.from = nodePath.dirname(file);
-            var transformed = jsTransformer.transform(src, transformOptions);
+            args.from = nodePath.dirname(file);
+            var transformed = jsTransformer.transform(src, args);
+
+
             fs.writeFileSync(file, transformed, {encoding: 'utf8'});
         }
-
 
         if (args.file) {
             transformFile(args.file);
@@ -71,6 +84,5 @@ module.exports = {
                 },
                 this);
         }
-        
     }
 };

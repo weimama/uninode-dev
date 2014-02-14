@@ -10,12 +10,12 @@ module.exports = {
 
     options: {
         file: {
-            description: "Only transform a single file",
-            type: "string"
+            description: 'Only transform a single file',
+            type: 'string'
         },
-        rhtml_to_rxml: {
-            description: "Rename rhtml extension to rxml to maintain XML parsing",
-            type: "boolean"
+        'rhtml-to-rxml': {
+            description: 'Rename rhtml extension to rxml to maintain XML parsing',
+            type: 'boolean'
         }
     },
 
@@ -36,11 +36,19 @@ module.exports = {
         return {
             dir: dir,
             file: file,
-            rhtmlToRxml: args.rhtml_to_rxml === true
+            rhtmlToRxml: args['rhtml-to-rxml'] === true
         };
     },
 
     run: function(args, config, rapido) {
+
+        console.log('--------------');
+        console.log('Configuration:');
+        for (var key in args) {
+            console.log(key + ': ' + args[key]);
+        }
+        console.log('--------------');
+        
         var dir = args.dir;
 
         function transformFile(file) {

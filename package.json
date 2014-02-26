@@ -1,6 +1,6 @@
 {
   "name": "raptor-dev",
-  "version": "0.1.0",
+  "version": "0.2.0-beta",
   "description": "Developer tools for RaptorJS",
   "keywords": [
     "rapido",
@@ -20,7 +20,7 @@
     "escodegen": "~1.1.0",
     "estraverse": "~1.5.0",
     "raptor-util": "^0.2.0-beta",
-    "rapido-module": "0.1.0"
+    "rapido-module": "^0.2.0-beta"
   },
   "bin": {
     "raptor-dev": "bin/raptor-dev"

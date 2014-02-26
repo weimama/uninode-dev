@@ -33,6 +33,10 @@
         "publish all": {
             "description": "Publish all RaptorJS modules",
             "file": "commands/command-publish-all.js"
+        },
+        "test all": {
+            "description": "Test all RaptorJS modules",
+            "file": "commands/command-test-all.js"
         }
     }
 }

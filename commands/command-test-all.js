@@ -49,13 +49,11 @@ module.exports = {
 
         modulesToPublish.sort();
 
-        // modulesToPublish = ['raptor-async'];
-
-        console.log('Publishing the following modules:\n- ' + modulesToPublish.join('\n- '));
+        console.log('Testing the following modules:\n- ' + modulesToPublish.join('\n- '));
 
         var promises = modulesToPublish.map(function(moduleName) {
             var moduleDir = new File(dir, moduleName);
-            var promise = rapido.runCommand('module', 'publish', {
+            var promise = rapido.runCommand('module', 'test', {
                     cwd: moduleDir.getAbsolutePath()
                 });
 
@@ -67,19 +65,17 @@ module.exports = {
             return promise;
         });
 
-        return raptorPromises.allSettled(promises)
+        return raptorPromises.all(promises)
             .then(function() {
+                rapido.log();
+                rapido.log.success('All test cases are passing!');
+            })
+            .fail(function() {
+                var message = Object.keys(failedModules).sort().map(function(moduleName) {
+                    return 'Module name: ' + moduleName + '\nReason: ' + failedModules[moduleName];
+                }).join('\n\n');
 
-                if (failed) {
-                    var message = Object.keys(failedModules).sort().map(function(moduleName) {
-                        return 'Module name: ' + moduleName + '\nReason: ' + failedModules[moduleName];
-                    }).join('\n\n');
-
-                    throw 'The following modules failed to publish:\n\n' + message;
-                } else {
-                    rapido.log();
-                    rapido.log.success('All modules successfully published!');    
-                }                
+                throw 'The following modules have failing tests:\n\n' + message;
             });
     }
 };

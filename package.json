@@ -12,14 +12,14 @@
   "readmeFilename": "README.md",
   "dependencies": {
     "rapido": "~1.0.0-SNAPSHOT",
-    "raptor-files": "~0.1.0-SNAPSHOT",
-    "raptor-ecma": "~0.1.0-SNAPSHOT",
-    "raptor-async": "~0.1.0-SNAPSHOT",
+    "raptor-files": "^0.2.0-beta",
+    "raptor-ecma": "^0.2.0-beta",
+    "raptor-async": "^0.2.0-beta",
     "q": "~0.9.7",
     "esprima": "~1.0.4",
     "escodegen": "~1.1.0",
     "estraverse": "~1.5.0",
-    "raptor-util": "0.1.0-SNAPSHOT",
+    "raptor-util": "^0.2.0-beta",
     "rapido-module": "0.1.0"
   },
   "bin": {

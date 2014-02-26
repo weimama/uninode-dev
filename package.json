@@ -19,23 +19,19 @@
     "esprima": "~1.0.4",
     "escodegen": "~1.1.0",
     "estraverse": "~1.5.0",
-    "raptor-util": "0.1.0-SNAPSHOT"
+    "raptor-util": "0.1.0-SNAPSHOT",
+    "rapido-module": "0.1.0"
   },
   "bin": {
     "raptor-dev": "bin/raptor-dev"
   },
-  "publishConfig": {
-    "registry": "http://npmjs.stratus.dev.ebay.com:5984/registry/_design/scratch/_rewrite"
-  },
   "repository": {
     "type": "git",
-    "url": "git@github.scm.corp.ebay.com:cubejs-ebay/ecube.git"
+    "url": "https://github.com/raptorjs3/raptor-dev.git"
   },
   "devDependencies": {
     "jshint": "~2.3.0",
     "mocha": "~1.15.1",
     "chai": "~1.8.1"
-  },
-  "ebay": {},
-  "private": true
+  }
 }

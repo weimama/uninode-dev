@@ -49,8 +49,6 @@ module.exports = {
 
         modulesToPublish.sort();
 
-        modulesToPublish = ['raptor-util'];
-
         console.log('Publishing the following modules:\n- ' + modulesToPublish.join('\n- '));
 
         var promises = modulesToPublish.map(function(moduleName) {

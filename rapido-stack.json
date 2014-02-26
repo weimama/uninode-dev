@@ -29,6 +29,10 @@
         "migrate templates": {
             "description": "Migrate Raptor Template files from XML to HTML",
             "file": "commands/command-migrate-templates.js"
+        },
+        "publish all": {
+            "description": "Publish all RaptorJS modules",
+            "file": "commands/command-publish-all.js"
         }
     }
 }

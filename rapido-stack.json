@@ -37,6 +37,10 @@
         "test all": {
             "description": "Test all RaptorJS modules",
             "file": "commands/command-test-all.js"
+        },
+        "clean all": {
+            "description": "Clean all RaptorJS modules",
+            "file": "commands/command-clean-all.js"
         }
     }
 }

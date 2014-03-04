@@ -8,6 +8,9 @@ require('rapido').run(process.argv, {
     stackDirs: [
         path.join(__dirname, '..')
     ],
+    nodeModulesDirs: [
+        path.join(__dirname, '../node_modules')
+    ],
     enabledStacks: [
         'raptor-dev',
         'module'

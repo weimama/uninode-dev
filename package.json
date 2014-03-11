@@ -1,5 +1,4 @@
 {
-    "path": "/Users/psteeleidem/development/github/raptorjs3/raptor-dev/package.json",
     "name": "raptor-dev",
     "description": "Developer tools for RaptorJS",
     "keywords": [
@@ -35,5 +34,5 @@
         "mocha": "~1.15.1",
         "chai": "~1.8.1"
     },
-    "version": "0.2.1-beta"
+    "version": "0.2.2-beta"
 }

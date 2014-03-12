@@ -89,7 +89,14 @@ module.exports = {
                         transformFile(file.getAbsolutePath());
                     }
                 },
-                this);
+                this,
+                {
+                    dirTraverseFilter: function(dir) {
+                        if (dir.getName() === 'node_modules') {
+                            return false;
+                        }
+                    }
+                });
         }
         
     }

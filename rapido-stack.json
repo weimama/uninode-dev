@@ -41,6 +41,10 @@
         "clean all": {
             "description": "Clean all RaptorJS modules",
             "file": "commands/command-clean-all.js"
+        },
+        "migrate taglibs": {
+            "description": "Migrate RTLD files to raptor-taglib.json",
+            "file": "commands/command-migrate-taglibs.js"
         }
     }
 }

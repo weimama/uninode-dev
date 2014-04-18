@@ -4,6 +4,7 @@ require('raptor-ecma/es6');
 var nodePath = require('path');
 var jsTransformer = require('../lib/js-transformer');
 var fs = require('fs');
+var walk = require('../lib/walk');
 
 module.exports = {
     usage: 'Usage: $0 $commandName [dir]',
@@ -22,67 +23,52 @@ module.exports = {
     },
 
     validate: function(args, rapido) {
-        var dir = args._[0];
-        if (dir) {
-            dir = nodePath.resolve(process.cwd(), dir);
-        }
-        else {
-            dir = process.cwd();
-        }
-
-        var file = args.file;
-        if (file) {
-            file = nodePath.resolve(process.cwd(), file);
+        var files = args._;
+        if (!files || !files.length) {
+            files = [process.cwd()];
         }
         
-        return {
-            dir: dir,
-            searchPath: [dir],
-            file: file,
+        var searchPath = files.filter(function(path) {
+            var stat = fs.statSync(path);
+            return stat.isDirectory();
+        });
 
+
+        return {
+            searchPath: searchPath,
+            files: files,
             skipTransformRequire: args['skip-transform-require']
         };
     },
 
     run: function(args, config, rapido) {
-        var dir = args.dir;
-
-        console.log('--------------');
-        console.log('Configuration:');
-        for (var key in args) {
-            console.log(key + ': ' + args[key]);
-        }
-        console.log('--------------');
+        var files = args.files;
 
         function transformFile(file) {
             var src = fs.readFileSync(file, {encoding: 'utf8'});
             console.log('Transforming ' + file + '...');
             args.from = nodePath.dirname(file);
             var transformed = jsTransformer.transform(src, args);
-
-
             fs.writeFileSync(file, transformed, {encoding: 'utf8'});
         }
 
-        if (args.file) {
-            transformFile(args.file);
-        }
-        else {
-            require('raptor-files/walker').walk(
-                dir,
-                function(file) {
+        walk(
+            files,
+            {
+                file: function(file) {
 
-                    if (file.isDirectory()) {
-                        return;
+                    if (file.endsWith('.js')) {
+                        transformFile(file);
                     }
-                    
-                    if (!file.getName().endsWith('.js')) {
-                        return;
-                    }
-
-                    transformFile(file.getAbsolutePath());
-                },
-                this);
-        }
+                }
+            },
+            function(err) {
+                if (err) {
+                    console.error('Error while migrating JavaScript: ' + (err.stack || err));
+                    return;
+                }
+                
+                console.log('All JavaScript files migrated to CommonJS');
+            });
     }
 };

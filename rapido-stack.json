@@ -45,6 +45,10 @@
         "migrate taglibs": {
             "description": "Migrate RTLD files to raptor-taglib.json",
             "file": "commands/command-migrate-taglibs.js"
+        },
+        "migrate components": {
+            "description": "Migrate UI components to the RaptorJS 3 style",
+            "file": "commands/command-migrate-components.js"
         }
     }
 }

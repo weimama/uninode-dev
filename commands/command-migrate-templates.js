@@ -1,11 +1,10 @@
-'use strict';
-
 require('raptor-ecma/es6');
 var nodePath = require('path');
 var xmlTemplateTransformer = require('../lib/xml-template-transformer');
 var removeNamespaces = require('../lib/template-remove-namespaces-transform');
 var fs = require('fs');
 var walk = require('../lib/walk');
+var extractOptimizerDependencies = require('../lib/extract-optimizer-dependencies');
 
 module.exports = {
     usage: 'Usage: $0 $commandName [dir]',
@@ -30,6 +29,8 @@ module.exports = {
 
     },
 
+    
+
     run: function(args, config, rapido) {
 
         console.log('--------------');
@@ -49,6 +50,35 @@ module.exports = {
             }
 
             transformed = removeNamespaces(transformed);
+
+            transformed = transformed.replace(/(\s+)w-widget="([^"]+)"/g, function(match, ws, widgetPath) {
+                var lastSlash = widgetPath.lastIndexOf('/');
+                if (lastSlash !== -1) {
+                    return ws +  'w-widget=".' + widgetPath.substring(lastSlash) + '"';
+                } else {
+                    return match;
+                }
+            });
+
+            transformed = transformed.replace(/<reload-auto-reload\s+enabled="true"\s*\/>/g, '<browser-refresh enabled="true"/>');
+
+            var results = extractOptimizerDependencies(transformed);
+
+
+            if (results) {
+                var dirname = nodePath.dirname(file);
+
+                var optimizerFile = nodePath.join(dirname, 'optimizer.json');
+                var optimizerMeta = {
+                    dependencies: results.dependencies
+                };
+
+                // console.log('dependencies: ', results.dependencies);
+
+                fs.writeFileSync(optimizerFile, JSON.stringify(optimizerMeta, null, 4), 'utf8');
+                transformed = results.transformed;
+            }
+
             if (src !== transformed) {
                 fs.writeFileSync(file, transformed, {encoding: 'utf8'});    
             }

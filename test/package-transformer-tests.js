@@ -41,7 +41,7 @@ describe('raptor-dev/package-transformer' , function() {
         expect(pkg).to.deep.equal({
             "dependencies": [
                 "test.js",
-                {"package": "raptor/client/features", "if-extension": "raptor.client.features"}
+                {"path": "raptor/client/features/optimizer.json", "if-extension": "raptor.client.features"}
             ]
         });
     });
@@ -67,7 +67,7 @@ describe('raptor-dev/package-transformer' , function() {
         expect(pkg).to.deep.equal({
             "dependencies": [
                 "test.js",
-                {"package": "raptor/client/features", "if-extension": "raptor.client.features"}
+                {"path": "raptor/client/features/optimizer.json", "if-extension": "raptor.client.features"}
             ]
         });
     });

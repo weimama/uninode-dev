@@ -1,10 +1,8 @@
 'use strict';
-
 require('raptor-ecma/es6');
-
-var nodePath = require('path');
 var esprima = require('esprima');
 var escodegen = require('escodegen');
+var walk = require('../lib/walk');
 
 module.exports = {
     usage: 'Usage: $0 $commandName [dir]',
@@ -13,59 +11,67 @@ module.exports = {
     },
 
     validate: function(args, rapido) {
-        var dir = args._[0];
-        if (dir) {
-            dir = nodePath.resolve(process.cwd(), dir);
-        }
-        else {
-            dir = process.cwd();
+        var files = args._;
+        if (!files || !files.length) {
+            throw 'one or more files is required';
         }
         
         return {
-            dir: dir
+            files: files
         };
     },
 
     run: function(args, config, rapido) {
-        var dir = args.dir;
 
-        require('raptor-files/walker').walk(
-            dir,
-            function(file) {
 
-                if (file.isDirectory()) {
+        var files = args.files;
+
+        function transformFile(file) {
+
+
+            var src = file.readAsString();
+
+            var ast = esprima.parse(src, {
+                raw: true,
+                tokens: true,
+                range: true,
+                comment: true
+            });
+
+            escodegen.attachComments(ast, ast.comments, ast.tokens);
+
+            var codegenOptions = {
+                comment: true,
+                format: {
+                    indent: {
+                        style: '    ',
+                        adjustMultilineComment: true
+                    },
+                    quotes: 'single'
+                }
+            };
+
+            var transformed = escodegen.generate(ast, codegenOptions);
+            file.writeAsString(transformed);
+        }
+
+        walk(
+            files,
+            {
+                file: function(file) {
+
+                    if (file.endsWith('.js')) {
+                        transformFile(file);
+                    }
+                }
+            },
+            function(err) {
+                if (err) {
+                    console.error('Error while migrating JavaScript: ' + (err.stack || err));
                     return;
                 }
                 
-                if (!file.getName().endsWith('.js')) {
-                    return;
-                }
-
-                var src = file.readAsString();
-
-                var ast = esprima.parse(src, {
-                    raw: true,
-                    tokens: true,
-                    range: true,
-                    comment: true
-                });
-
-                escodegen.attachComments(ast, ast.comments, ast.tokens);
-
-                var codegenOptions = {
-                    comment: true,
-                    format: {
-                        indent: {
-                            style: '    ',
-                            adjustMultilineComment: true
-                        },
-                        quotes: 'single'
-                    }
-                };
-
-                var transformed = escodegen.generate(ast, codegenOptions);
-                file.writeAsString(transformed);
-            },
-            this);
+                console.log('All JavaScript files migrated to CommonJS');
+            });
     }
 };

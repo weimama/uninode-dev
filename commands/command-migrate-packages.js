@@ -1,11 +1,10 @@
 'use strict';
 
 require('raptor-ecma/es6');
-
+var walk = require('../lib/walk');
 var nodePath = require('path');
 var fs = require('fs');
 var packageTransformer = require('../lib/package-transformer');
-var File = require('raptor-files/File');
 
 function readJsonFile(path) {
     var json = fs.readFileSync(path, {encoding: 'utf8'});
@@ -33,106 +32,111 @@ module.exports = {
     },
 
     validate: function(args, rapido) {
-        var dir = args._[0];
-        if (dir) {
-            dir = nodePath.resolve(process.cwd(), dir);
-        }
-        else {
-            dir = process.cwd();
+        var files = args._;
+        if (!files || !files.length) {
+            throw 'one or more files is required';
         }
         
         return {
-            dir: dir
+            files: files
         };
     },
 
     run: function(args, config, rapido) {
-        var dir = args.dir;
+        var files = args.files;
 
-        require('raptor-files/walker').walk(
-            dir,
-            function(file) {
+        walk(
+            files,
+            {
+                file: function(file) {
 
-                if (file.isDirectory()) {
-                    return;
-                }
-                
-                if (file.getName() !== 'package.json' &&
-                    !file.getName().endsWith('-package.json') &&
-                    file.getName() !== 'optimizer.json' &&
-                    !file.getName().endsWith('-optimizer.json')) {
-                    return;
-                }
+                    var basename = nodePath.basename(file);
+                    var dirname = nodePath.dirname(file);
 
-                var pkg;
-                try {
-                    pkg = readJsonFile(file.getAbsolutePath());
-                }
-                catch(e) {
-                    rapido.log.error('WARN', 'Unable to parse JSON file at path "' + file.getAbsolutePath() + '". Skipping!');
-                    return;
-                }
-                
-                
-                var isOptimizerManifest = pkg.raptor ||
-                    pkg['raptor-optimizer'] ||
-                    Array.isArray(pkg.dependencies) ||
-                    Array.isArray(pkg.includes) ||
-                    pkg.extensions;
+                    if (basename !== 'package.json' &&
+                        !basename.endsWith('-package.json') &&
+                        basename !== 'optimizer.json' &&
+                        !basename.endsWith('-optimizer.json')) {
+                        return;
+                    }
 
-                if (isOptimizerManifest) {
-                    rapido.log.info('Migrating "' + file.getAbsolutePath() + '"...');
-                    var transformedPkg = packageTransformer.transform(pkg);
+                    var pkg;
+                    try {
+                        pkg = readJsonFile(file);
+                    }
+                    catch(e) {
+                        rapido.log.error('WARN', 'Unable to parse JSON file at path "' + file + '". Skipping!');
+                        return;
+                    }
                     
-                    var outputName;
+                    
+                    var isOptimizerManifest = pkg.raptor ||
+                        pkg['raptor-optimizer'] ||
+                        Array.isArray(pkg.dependencies) ||
+                        Array.isArray(pkg.includes) ||
+                        pkg.extensions;
 
-                    if (file.getName().endsWith('-package.json')) {
-                        outputName = file.getName().slice(0, 0-'-package.json'.length) + '-optimizer.json';
-                    }
-                    else if (file.getName() === 'package.json') {
-                        outputName = 'optimizer.json';
-                    }
-                    else {
-                        outputName = file.getName();
-                    }
+                    if (isOptimizerManifest) {
+                        rapido.log.info('Migrating "' + file + '"...');
+                        var transformedPkg = packageTransformer.transform(pkg);
+                        
+                        var outputName;
 
-                    var outputFile = new File(file.getParent(), outputName);
-                    var alreadyExists = outputFile.exists();
-
-                    writeJsonFile(outputFile.getAbsolutePath(), transformedPkg);
-
-                    if (alreadyExists) {
-                        rapido.log.info('updated', outputFile.getAbsolutePath());
-                    }
-                    else {
-                        rapido.log.info('added', outputFile.getAbsolutePath());
-                    }
-
-                    if (outputFile.getAbsolutePath() !== file.getAbsolutePath()) {
-                        delete pkg.raptor;
-                        delete pkg['raptor-optimizer'];
-
-                        if (Array.isArray(pkg.dependencies)) {
-                            delete pkg.dependencies;
+                        if (basename.endsWith('-package.json')) {
+                            outputName = basename.slice(0, 0-'-package.json'.length) + '-optimizer.json';
                         }
-
-                        delete pkg.extensions;
-
-                        if (pkg.type === 'raptor-module') {
-                            pkg = {}; // Delete all of the metadata... not actually a Node.js module
-                        }
-
-                        if (isEmpty(pkg)) {
-                            rapido.log.info('deleted', file.getAbsolutePath());
-                            file.remove();
+                        else if (basename === 'package.json') {
+                            outputName = 'optimizer.json';
                         }
                         else {
-                            rapido.log.info('updated', file.getAbsolutePath());
-                            writeJsonFile(file.getAbsolutePath(), pkg);
+                            outputName = basename;
+                        }
+
+                        var outputFile = nodePath.join(dirname, outputName);
+                        var alreadyExists = fs.existsSync(outputFile);
+
+                        writeJsonFile(outputFile, transformedPkg);
+
+                        if (alreadyExists) {
+                            rapido.log.info('updated', outputFile);
+                        }
+                        else {
+                            rapido.log.info('added', outputFile);
+                        }
+
+                        if (outputFile !== file) {
+                            delete pkg.raptor;
+                            delete pkg['raptor-optimizer'];
+
+                            if (Array.isArray(pkg.dependencies)) {
+                                delete pkg.dependencies;
+                            }
+
+                            delete pkg.extensions;
+
+                            if (pkg.type === 'raptor-module') {
+                                pkg = {}; // Delete all of the metadata... not actually a Node.js module
+                            }
+
+                            if (isEmpty(pkg)) {
+                                rapido.log.info('deleted', file);
+                                fs.unlinkSync(file);
+                            }
+                            else {
+                                rapido.log.info('updated', file);
+                                writeJsonFile(file, pkg);
+                            }
                         }
                     }
                 }
             },
-            this);
+            function(err) {
+                if (err) {
+                    console.error('Error while migrating to optimizer.json: ' + (err.stack || err));
+                    return;
+                }
+                
+                console.log('All package.json migrated to optimizer.json');
+            });
     }
 };

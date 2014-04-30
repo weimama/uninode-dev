@@ -22,7 +22,8 @@
     "rapido-module": "^0.2.0-beta",
     "raptor-promises": "^0.2.0-beta",
     "raptor-xml": "^0.2.1-beta",
-    "htmlparser2": "^3.7.1"
+    "htmlparser2": "^3.7.1",
+    "mkdirp": "^0.3.5"
   },
   "bin": {
     "raptor-dev": "bin/raptor-dev"

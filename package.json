@@ -10,19 +10,20 @@
   },
   "readmeFilename": "README.md",
   "dependencies": {
-    "rapido": "^1.1.2-beta",
-    "raptor-files": "^0.2.0-beta",
-    "raptor-ecma": "^0.2.0-beta",
-    "raptor-async": "^0.2.0-beta",
-    "q": "~0.9.7",
-    "esprima": "~1.0.4",
     "escodegen": "~1.1.0",
+    "esprima": "~1.0.4",
     "estraverse": "~1.5.0",
-    "raptor-util": "^0.2.0-beta",
+    "htmlparser2": "^3.7.1",
+    "prompt": "^0.2.12",
+    "q": "~0.9.7",
+    "rapido": "^1.1.2-beta",
     "rapido-module": "^0.2.0-beta",
+    "raptor-async": "^0.2.0-beta",
+    "raptor-ecma": "^0.2.0-beta",
+    "raptor-files": "^0.2.0-beta",
     "raptor-promises": "^0.2.0-beta",
-    "raptor-xml": "^0.2.1-beta",
-    "htmlparser2": "^3.7.1"
+    "raptor-util": "^0.2.0-beta",
+    "raptor-xml": "^0.2.1-beta"
   },
   "bin": {
     "raptor-dev": "bin/raptor-dev"

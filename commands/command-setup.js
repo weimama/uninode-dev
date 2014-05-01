@@ -6,7 +6,7 @@ var npm = require('../lib/npm');
 
 
 function runSetup(args, logger) {
-    var org = args.org;
+    var org = require('../lib/raptorjs-github-org');
 
     logger.info('Repositories for ' + org + ' will be cloned to ' + args.dir);
 
@@ -57,7 +57,8 @@ module.exports = {
 
     options: {
         'org': {
-            description: 'GitHub organization'
+            'description': 'GitHub organization',
+            'default': require('../lib/raptorjs-github-org')
         }
     },
 

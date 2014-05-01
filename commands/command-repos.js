@@ -6,7 +6,7 @@ module.exports = {
     options: {},
 
     validate: function(args, rapido) {
-        args.org = args._[0] || 'raptorjs3';
+        args.org = args._[0] || require('../lib/raptorjs-github-org');
         return args;
     },
 

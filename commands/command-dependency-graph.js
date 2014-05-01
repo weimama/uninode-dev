@@ -29,13 +29,14 @@ module.exports = {
 
     options: {
         'org': {
-            description: 'GitHub organization'
+            'description': 'GitHub organization',
+            'default': require('../lib/raptorjs-github-org')
         }
     },
 
     validate: function(args, rapido) {
 
-        args.org = args.org || 'raptorjs3';
+        args.org = args.org;
         args.dir = args._[0];
 
         if (args.dir) {
@@ -50,7 +51,7 @@ module.exports = {
     run: function(args, config, rapido) {
 
         var reposDir = args.dir;
-        var org = args.org;
+        var org = require('../lib/raptorjs-github-org');
 
         require('../lib/github').fetchRepos(org, function(err, repos) {
 

@@ -39,7 +39,7 @@ module.exports = {
 
         for (var i=0; i<children.length; i++) {
             var childDir = children[i];
-            if (childDir.getName().startsWith('raptor-') || childDir.getName() === 'rapido') {
+            if (childDir.getName() !== 'raptor-samples' && (childDir.getName().startsWith('raptor-') || childDir.getName() === 'rapido')) {
                 var gitDir = new File(childDir, '.git');
                 if (gitDir.exists()) {
                     modulesToPublish.push(childDir.getName());

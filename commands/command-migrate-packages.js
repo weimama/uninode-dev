@@ -29,21 +29,26 @@ module.exports = {
     usage: 'Usage: $0 $commandName [dir]',
 
     options: {
+        'preserve-orig': {
+            description: 'Do not modify or delete the original package.json',
+            type: 'boolean',
+            default: false
+        }
     },
 
     validate: function(args, rapido) {
-        var files = args._;
-        if (!files || !files.length) {
+        args.files = args._;
+        if (!args.files || !args.files.length) {
             throw 'one or more files is required';
         }
         
-        return {
-            files: files
-        };
+        return args;
     },
 
     run: function(args, config, rapido) {
         var files = args.files;
+
+        console.log(JSON.stringify(args, null, ' '));
 
         walk(
             files,
@@ -104,7 +109,7 @@ module.exports = {
                             rapido.log.info('added', outputFile);
                         }
 
-                        if (outputFile !== file) {
+                        if ((args['preserve-orig'] === false) && (outputFile !== file)) {
                             delete pkg.raptor;
                             delete pkg['raptor-optimizer'];
 
@@ -118,6 +123,7 @@ module.exports = {
                                 pkg = {}; // Delete all of the metadata... not actually a Node.js module
                             }
 
+                            
                             if (isEmpty(pkg)) {
                                 rapido.log.info('deleted', file);
                                 fs.unlinkSync(file);

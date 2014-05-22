@@ -10,7 +10,9 @@ module.exports = {
     usage: 'Usage: $0 $commandName <file>',
 
     options: {
-        
+        'taglib-name': {
+            'default': 'raptor-taglib.json'
+        }
     },
 
     validate: function(args, rapido) {
@@ -19,9 +21,8 @@ module.exports = {
             throw 'one or more files is required';
         }
         
-        return {
-            files: files
-        };
+        args.files = files;
+        return args;
     },
 
     run: function(args, config, rapido) {
@@ -37,17 +38,16 @@ module.exports = {
                     var taglib;
                     
                     var dirname = nodePath.dirname(file);
-                    var outputFile = nodePath.join(dirname, 'raptor-taglib.json');
+                    var outputFile = nodePath.join(dirname, args['taglib-name']);
 
                     try {
                         if (file.endsWith('.rtld')) {
-                            foundRtldFiles.push(file);
-
                             var importedPaths = [];
                             var prefix;
 
                             var options = {
                                 onNamespace: function(namespace) {
+                                    // use the shortest prefix that we find
                                     if (prefix == null || namespace.length < prefix) {
                                         prefix = namespace;
                                     }
@@ -57,13 +57,14 @@ module.exports = {
                                 }
                             };
 
-
-
                             taglib = xmlTransformer.transform(file, options);
 
                             if (!prefix) {
+                                rapido.log.warn('Ignoring ' + file + ' because it has no prefix');
                                 return;
                             }
+
+                            foundRtldFiles.push(file);
 
                             if (importedPaths.length) {
                                 var tags = taglib.tags || (taglib.tags = {});
@@ -80,17 +81,25 @@ module.exports = {
                                         var importedTagName = tagNames[0];
                                         var tagDef = importedTaglib.tags[importedTagName];
                                         var tagFile = nodePath.join(importedDirname, 'raptor-tag.json');
+
+                                        // delete the origName property before writing tag file
+                                        delete tagDef.origName;
+
                                         fs.writeFileSync(tagFile, JSON.stringify(tagDef, null, 4), 'utf8');
                                         tags[importedTagName] = nodePath.relative(dirname, tagFile);
                                     } else {
                                         tagNames.forEach(function(importedTagName) {
                                             var tagDef = importedTaglib.tags[importedTagName];
-                                            var tagFile = nodePath.join(importedDirname, importedTagName + '.raptor-tag.json');
+                                            var tagFile = nodePath.join(importedDirname, tagDef.origName + '.raptor-tag.json');
+
+                                            // delete the origName property before writing tag file
+                                            delete tagDef.origName;
+                                            
                                             fs.writeFileSync(tagFile, JSON.stringify(tagDef, null, 4), 'utf8');
                                             tags[importedTagName] = nodePath.relative(dirname, tagFile);
                                         });
                                     }
-                                });  
+                                });
                             }
                             // if (fs.existsSync(outputFile)) {
                             //     return;
@@ -100,8 +109,6 @@ module.exports = {
                         } else {
                             return;
                         }
-
-                        
 
                         fs.writeFileSync(outputFile, JSON.stringify(taglib, null, 4), 'utf8');
                         console.log('Migrated "' + rapido.relativePath(file) + '" to "' + rapido.relativePath(outputFile) + '"');
@@ -118,7 +125,7 @@ module.exports = {
                 }
 
                 foundRtldFiles.forEach(function(file) {
-                    fs.unlinkSync(file);
+                    //fs.unlinkSync(file);
                 });
                 
                 console.log('All taglibs migrated');

@@ -76,14 +76,15 @@ module.exports = {
 
                 if (failed) {
                     var message = Object.keys(failedModules).sort().map(function(moduleName) {
-                        return 'Module name: ' + moduleName + '\nReason: ' + failedModules[moduleName];
+                        var err = failedModules[moduleName];
+                        return 'Module name: ' + moduleName + '\nReason: ' + (err.stack || err);
                     }).join('\n\n');
 
                     throw 'The following modules failed to publish:\n\n' + message;
                 } else {
                     rapido.log();
-                    rapido.log.success('All modules successfully published!');    
-                }                
+                    rapido.log.success('All modules successfully published!');
+                }
             });
     }
 };

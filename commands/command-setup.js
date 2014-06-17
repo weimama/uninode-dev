@@ -39,16 +39,18 @@ function runSetup(args, logger) {
 
             logger.info('All raptorjs repositories cloned or updated successfully.');
 
-            // STEP 3: Use "npm link" to link all of the modules for development
-            npm.linkModules(repos, args.dir, logger, function(err) {
+            if (args.link !== false) {
+                // STEP 3: Use "npm link" to link all of the modules for development
+                npm.linkModules(repos, args.dir, logger, function(err) {
 
-                if (err) {
-                    logger.error('Error linking modules.', err);
-                    return;
-                }
+                    if (err) {
+                        logger.error('Error linking modules.', err);
+                        return;
+                    }
 
-                logger.info('All raptorjs modules linked successfully.');
-            });
+                    logger.info('All raptorjs modules linked successfully.');
+                });
+            }
         });
     });
 }
@@ -59,6 +61,11 @@ module.exports = {
         'org': {
             'description': 'GitHub organization',
             'default': require('../lib/raptorjs-github-org')
+        },
+        'link': {
+            'description': 'Disable/enable npm link of modules',
+            type: 'boolean',
+            default: true
         }
     },
 
@@ -76,8 +83,6 @@ module.exports = {
     },
 
     run: function(args, config, rapido) {
-
-
         var org = args.org;
 
         var logger = rapido.log;

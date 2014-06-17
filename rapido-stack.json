@@ -57,6 +57,10 @@
         "link modules": {
             "description": "Link modules into current project that are referenced in package.json",
             "file": "commands/command-link-modules.js"
+        },
+        "commit all": {
+            "description": "Commit all changes in nested projects",
+            "file": "commands/command-commit-all.js"
         }
     }
 }

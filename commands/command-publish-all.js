@@ -1,6 +1,6 @@
 'use strict';
 
-require('raptor-ecma/es6');
+require('raptor-polyfill');
 var File = require('raptor-files/File');
 var raptorPromises = require('raptor-promises');
 

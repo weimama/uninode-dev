@@ -1,7 +1,7 @@
 var walk = require('../lib/walk');
 var nodePath = require('path');
 var fs = require('fs');
-require('raptor-ecma/es6');
+require('raptor-polyfill');
 
 var mkdirp = require('mkdirp');
 var raptorAsync = require('raptor-async');

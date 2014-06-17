@@ -1,6 +1,6 @@
 'use strict';
 
-require('raptor-ecma/es6');
+require('raptor-polyfill');
 var nodePath = require('path');
 var jsTransformer = require('../lib/js-transformer');
 var fs = require('fs');

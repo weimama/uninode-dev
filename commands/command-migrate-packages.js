@@ -1,6 +1,6 @@
 'use strict';
 
-require('raptor-ecma/es6');
+require('raptor-polyfill');
 var walk = require('../lib/walk');
 var nodePath = require('path');
 var fs = require('fs');

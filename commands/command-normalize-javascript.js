@@ -1,5 +1,5 @@
 'use strict';
-require('raptor-ecma/es6');
+require('raptor-polyfill');
 var esprima = require('esprima');
 var escodegen = require('escodegen');
 var walk = require('../lib/walk');

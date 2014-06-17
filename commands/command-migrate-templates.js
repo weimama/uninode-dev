@@ -1,4 +1,4 @@
-require('raptor-ecma/es6');
+require('raptor-polyfill');
 var nodePath = require('path');
 var xmlTemplateTransformer = require('../lib/xml-template-transformer');
 var removeNamespaces = require('../lib/template-remove-namespaces-transform');

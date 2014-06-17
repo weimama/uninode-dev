@@ -1,6 +1,6 @@
 'use strict';
 
-require('raptor-ecma/es6');
+require('raptor-polyfill/string/startsWith');
 var File = require('raptor-files/File');
 
 var nodePath = require('path');

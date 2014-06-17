@@ -4,7 +4,7 @@ var nodePath = require('path');
 var fs = require('fs');
 var walk = require('../lib/walk');
 
-require('raptor-ecma/es6');
+require('raptor-polyfill');
 
 module.exports = {
     usage: 'Usage: $0 $commandName <file>',

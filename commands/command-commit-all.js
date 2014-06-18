@@ -81,14 +81,15 @@ module.exports = {
                             .then(function() {
                                 console.log('Committing changes for "' + moduleName + '"...');
                                 return spawnGit(['commit', '-a', '-m', args.message], {cwd: cwd});    
-                            })
-                            .then(function() {
-                                console.log('Committing changes for "' + moduleName + '"...');
-                                return spawnGit(['push', 'origin', 'master'], {cwd: cwd});
                             });
                     },
                     function rejected() {
-                        console.log('No changes to commit for "' + moduleName + '". Skipping...');
+                        console.log('No changes to commit for "' + moduleName + '".');
+                    })
+                .then(
+                    function() {
+                        console.log('Pushing changes for "' + moduleName + '"...');
+                        return spawnGit(['push', 'origin', 'master'], {cwd: cwd});
                     });
 
             return promise;
@@ -97,7 +98,7 @@ module.exports = {
         return promise.then(function() {
 
                 rapido.log();
-                rapido.log.success('All changes committer and pushed');
+                rapido.log.success('All changes committed and pushed');
             });
     }
 };

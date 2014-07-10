@@ -52,6 +52,8 @@ module.exports = {
             fs.writeFileSync(file, transformed, {encoding: 'utf8'});
         }
 
+        console.log('Transforming files in the following directories: ' + files.join(', '));
+
         walk(
             files,
             {

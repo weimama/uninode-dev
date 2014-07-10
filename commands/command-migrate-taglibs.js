@@ -48,7 +48,7 @@ module.exports = {
                             var options = {
                                 onNamespace: function(namespace) {
                                     // use the shortest prefix that we find
-                                    if (prefix == null || namespace.length < prefix) {
+                                    if (prefix == null || namespace.length < prefix.length) {
                                         prefix = namespace;
                                     }
                                 },

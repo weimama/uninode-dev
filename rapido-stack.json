@@ -61,6 +61,14 @@
         "commit all": {
             "description": "Commit all changes in nested projects",
             "file": "commands/command-commit-all.js"
+        },
+        "pretty print templates": {
+            "description": "Pretty print all Raptor Template files",
+            "file": "commands/command-pretty-print-templates.js"
+        },
+        "cleanup templates": {
+            "description": "Cleanup Raptor Templates by favoring directives as attributes",
+            "file": "commands/command-cleanup-templates.js"
         }
     }
 }

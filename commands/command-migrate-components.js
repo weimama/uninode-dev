@@ -85,7 +85,7 @@ module.exports = {
                     code = JSON.stringify(raptorTag, null, 4);
                 } else if (filename === oldShortName + '.css') {
                     targetFile = nodePath.join(targetDir, 'style.css');
-                } else if (filename === oldShortName + 'Widget.js') {
+                } else if (filename === oldShortName + 'Widget.js' || filename === 'widget.js') {
                     targetFile = nodePath.join(targetDir, 'widget.js');
                     code = fs.readFileSync(file, 'utf8');
                     var oldClassNameRegExp = new RegExp(nodePath.basename(sourceDir) + 'Widget', 'g');
@@ -93,8 +93,8 @@ module.exports = {
                 } else if (filename === oldShortName + '.rhtml') {
                     targetFile = nodePath.join(targetDir, 'template.rhtml');
                     code = fs.readFileSync(file, 'utf8');
-                    code = code.replace(/w[:-]widget="([^"]+)"/g, 'w-widget="./widget"');
-                } else if (filename === oldShortName + 'Renderer.js') {
+                    code = code.replace(/w[:-]widget="([^"]+)"/g, 'w-bind="./widget"');
+                } else if (filename === oldShortName + 'Renderer.js' || filename === 'renderer.js') {
                     targetFile = nodePath.join(targetDir, 'renderer.js');
                     code = fs.readFileSync(file, 'utf8');
                     code = code.replace(/templating/g, 'raptorTemplates');

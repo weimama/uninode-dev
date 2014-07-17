@@ -92,5 +92,9 @@ describe('raptor-dev/js-transformer' , function() {
         testTransform('define-object');
     });
 
+    it.only('should transform references to modules that use a path relative to the project root', function() {
+        testTransform('require-path-relative-to-project-root');
+    });
+
 });
 

@@ -33,6 +33,10 @@ module.exports = {
             description: 'Do not modify or delete the original package.json',
             type: 'boolean',
             default: false
+        },
+        'root-dir': {
+            description: 'The root directory to resolve "absolute" paths relative to',
+            type: 'string'
         }
     },
 
@@ -41,14 +45,25 @@ module.exports = {
         if (!args.files || !args.files.length) {
             throw 'one or more files is required';
         }
+
+        var rootDir = args['root-dir'];
         
+        if (rootDir) {
+            rootDir = nodePath.resolve(process.cwd(), rootDir);
+        } else {
+            rootDir = process.cwd();
+        }
+
+        args.rootDir = rootDir;
+
         return args;
     },
 
     run: function(args, config, rapido) {
         var files = args.files;
+        var rootDir = args.rootDir;
 
-        console.log(JSON.stringify(args, null, ' '));
+        // console.log(JSON.stringify(args, null, ' '));
 
         walk(
             files,
@@ -83,7 +98,7 @@ module.exports = {
 
                     if (isOptimizerManifest) {
                         rapido.log.info('Migrating "' + file + '"...');
-                        var transformedPkg = packageTransformer.transform(pkg);
+                        var transformedPkg = packageTransformer.transform(pkg, file, rootDir);
                         
                         var outputName;
 
@@ -119,7 +134,7 @@ module.exports = {
 
                             delete pkg.extensions;
 
-                            if (pkg.type === 'raptor-module') {
+                            if (pkg.type === 'raptor-module' || pkg.type === 'module') {
                                 pkg = {}; // Delete all of the metadata... not actually a Node.js module
                             }
 

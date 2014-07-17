@@ -99,7 +99,10 @@ module.exports = {
         function transformFile(file) {
             console.log('Transforming ' + file + '...');
             var src = fs.readFileSync(file, 'utf8');
-            var $ = cheerio.load(src);
+            var $ = cheerio.load(src, {
+                recognizeSelfClosing: true,
+                recognizeCDATA: true
+            });
 
             var isXml = $('c\\:template').length || $('template').length;
             transformIf($, isXml);
@@ -115,6 +118,9 @@ module.exports = {
             });
 
             finalHtml = finalHtml.replace(/&apos;/g, "'");
+            finalHtml = finalHtml.replace(/><\/([^>]+)>/g, function(match, tagName) {
+                return '/>';
+            });
 
 
             fs.writeFileSync(file, finalHtml, 'utf8');

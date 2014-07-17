@@ -69,6 +69,14 @@
         "cleanup templates": {
             "description": "Cleanup Raptor Templates by favoring directives as attributes",
             "file": "commands/command-cleanup-templates.js"
+        },
+        "move dir": {
+            "description": "Move a directory and update all relative paths",
+            "file": "commands/command-move-dir.js"
+        },
+        "migrate template includes": {
+            "description": "Migrate template includes to custom tags",
+            "file": "commands/command-migrate-template-includes.js"
         }
     }
 }

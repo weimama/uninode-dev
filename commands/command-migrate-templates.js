@@ -13,6 +13,10 @@ module.exports = {
         'rhtml-to-rxml': {
             description: 'Rename rhtml extension to rxml to maintain XML parsing',
             type: 'boolean'
+        },
+        'root-dir': {
+            description: 'The root directory to resolve "absolute" paths relative to',
+            type: 'string'
         }
     },
 
@@ -22,9 +26,18 @@ module.exports = {
             throw 'one or more files is required';
         }
         
+        var rootDir = args['root-dir'];
+        
+        if (rootDir) {
+            rootDir = nodePath.resolve(process.cwd(), rootDir);
+        } else {
+            rootDir = process.cwd();
+        }
+
         return {
             rhtmlToRxml: args['rhtml-to-rxml'] === true,
-            files: files
+            files: files,
+            rootDir: rootDir
         };
 
     },
@@ -32,7 +45,7 @@ module.exports = {
     
 
     run: function(args, config, rapido) {
-
+        var rootDir = args.rootDir;
         console.log('--------------');
         console.log('Configuration:');
         for (var key in args) {
@@ -54,7 +67,7 @@ module.exports = {
             transformed = transformed.replace(/(\s+)w-widget="([^"]+)"/g, function(match, ws, widgetPath) {
                 var lastSlash = widgetPath.lastIndexOf('/');
                 if (lastSlash !== -1) {
-                    return ws +  'w-widget=".' + widgetPath.substring(lastSlash) + '"';
+                    return ws +  'w-bind=".' + widgetPath.substring(lastSlash) + '"';
                 } else {
                     return match;
                 }
@@ -62,7 +75,7 @@ module.exports = {
 
             transformed = transformed.replace(/<reload-auto-reload\s+enabled="true"\s*\/>/g, '<browser-refresh enabled="true"/>');
 
-            var results = extractOptimizerDependencies(transformed);
+            var results = extractOptimizerDependencies(transformed, file, rootDir);
 
 
             if (results) {

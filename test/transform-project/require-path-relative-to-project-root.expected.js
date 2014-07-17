@@ -1,0 +1,1 @@
+var renderer = require('./ui-components/buttons/SimpleButton/SimpleButtonRenderer');

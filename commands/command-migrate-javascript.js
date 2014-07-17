@@ -14,11 +14,6 @@ module.exports = {
             description: 'Skip transforming non-raptor module paths in calls to require() to relative paths',
             type: 'boolean',
             default: false
-        },
-
-        file: {
-            description: 'Only transform a single file',
-            type: 'string'
         }
     },
 
@@ -45,6 +40,11 @@ module.exports = {
         var files = args.files;
 
         function transformFile(file) {
+            if (/^jquery/.test(nodePath.basename(file))) {
+                // Don't bother transforming jquery and jquery plugins
+                return;
+            }
+
             var src = fs.readFileSync(file, {encoding: 'utf8'});
             console.log('Transforming ' + file + '...');
             args.from = nodePath.dirname(file);

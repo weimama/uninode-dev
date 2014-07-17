@@ -6,6 +6,7 @@ var findTemplateIncludes = require('../lib/find-template-includes');
 var extend = require('raptor-util/extend');
 var raptorAsync = require('raptor-async');
 var optimizerFixRelativePaths = require('../lib/optimizerFixRelativePaths');
+var commonjsFixRelativePaths = require('../lib/commonjsFixRelativePaths');
 
 function copyDir(dir, targetDir) {
     try {
@@ -109,6 +110,8 @@ module.exports = {
                             // console.log(module.id, 'fixRelativePaths: ', file, fromDir,);
                             optimizerManifest = optimizerFixRelativePaths(optimizerManifest, file, fromDir, toDir); 
                             fs.writeFileSync(file, JSON.stringify(optimizerManifest, null, 4), 'utf8');
+                        } else if (basename.endsWith('.js')) {
+                            commonjsFixRelativePaths(file, fromDir, toDir);
                         }
                     }
                 },

@@ -1,5 +1,6 @@
 var walk = require('../lib/walk');
 var optimizerFixRelativePaths = require('../lib/optimizerFixRelativePaths');
+var commonjsFixRelativePaths = require('../lib/commonjsFixRelativePaths');
 
 var nodePath = require('path');
 var fs = require('fs');
@@ -54,6 +55,9 @@ module.exports = {
                         var optimizerManifest = JSON.parse(fs.readFileSync(file, 'utf8'));
                         optimizerManifest = optimizerFixRelativePaths(optimizerManifest, file, fromDir, toDir); 
                         fs.writeFileSync(file, JSON.stringify(optimizerManifest, null, 4), 'utf8');
+                    } else if (basename.endsWith('.js')) {
+                        console.log('Updating relative paths in "' + file + '"...');
+                        commonjsFixRelativePaths(file, fromDir, toDir);
                     }
                 }
             },

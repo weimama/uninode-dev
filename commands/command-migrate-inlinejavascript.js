@@ -138,6 +138,10 @@ module.exports = {
                             var fileNo = '000' + i;
                             fileNo = fileNo.slice(-3);
                             var shortFileName = basename + '-inlineWidget' + fileNo + '.js';
+                            shortFileName = 'widget.js';
+                            if(i>0) {
+                                shortFileName = 'widget'+fileNo + '.js';
+                            }
                             var fileName = path.resolve(path.dirname(file), shortFileName);
                             var jsSrc = jsArrs[i];
                             jsSrc = jsSrc.replace(/<script([\s\S])*?>/mi,'');

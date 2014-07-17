@@ -6,7 +6,7 @@ var fs = require('fs');
 require('raptor-polyfill');
 
 var mkdirp = require('mkdirp');
-var raptorAsync = require('raptor-async');
+// var raptorAsync = require('raptor-async');
 
 module.exports = {
     usage: 'Usage: $0 $commandName <from-dir> <to-dir> --update-dir <update-dir>',

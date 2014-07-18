@@ -100,6 +100,8 @@ module.exports = {
             var r = src && src.indexOf(".getSiteId()") > -1;
             r = r || src && src.indexOf(".getMarketplaceId(") > -1;
             r = r || src && src.indexOf(".getTerritoryId(") > -1;
+            r = r || src && src.indexOf(".attributes.request") > -1;
+
             if (r) {
                 moduleOptions.moduleNames['commons-ebay'] = true;
             }

@@ -87,6 +87,9 @@ module.exports = {
 
         function hasEbayTracking(src) {
             var r = src && src.indexOf("require('ebay-tracking')") > -1;
+            r = r || src && src.indexOf(".trackVectorTag(") > -1;
+            r = r || src && src.indexOf(".trackTag(") > -1;
+
             if (r) {
                 moduleOptions.moduleNames['ebay-tracking'] = true;
             }
@@ -128,12 +131,39 @@ module.exports = {
             return r;
         }
 
+        function hasEbayCookie(src) {
+            var r = src && src.indexOf(".getCookieManager(") > -1;
+            if (r) {
+                moduleOptions.moduleNames['cookies-ebay'] = true;
+            }
+            return r;
+        }
+
+        function hasEbayCsrf(src) {
+            var r = src && src.indexOf("require('ebay-csrf')") > -1;
+            if (r) {
+                moduleOptions.moduleNames['ebay-csrf'] = true;
+            }
+            return r;
+        }
+
+        function hasRaptor(src) {
+            var r = src && src.indexOf("require('raptor')") > -1;
+            if (r) {
+                moduleOptions.moduleNames['raptor'] = true;
+            }
+            return r;
+        }
+
         function hasCubejsAPI(src) {
             var checkFuncs = [hasModuleConfig, hasRaptorPromises, hasUserEbay, hasEbayRequestContext, hasEbayTracking ];
             checkFuncs.push(hasCommonsEbay);
             checkFuncs.push(hasEbayI18n);
             checkFuncs.push(hasEbayEp);
             checkFuncs.push(hasEbayRestClient);
+            checkFuncs.push(hasEbayCookie);
+            checkFuncs.push(hasEbayCsrf);
+            checkFuncs.push(hasRaptor);
 
             var checkResults = _.map(checkFuncs, function(check) {
                 var r = check(src);
@@ -164,6 +194,12 @@ module.exports = {
             if (findSrc === true) {
                 moduleOptions.migratePath = migratePath;
             }
+            var pos = file.lastIndexOf('/src');
+            if(pos !== -1) {
+                var projectSrcDir = file.substring(0, pos);
+                moduleOptions.projectSrcDir = projectSrcDir;
+            }
+
 
             var src = fs.readFileSync(file, {
                 encoding: 'utf8'

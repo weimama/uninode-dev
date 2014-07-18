@@ -119,11 +119,20 @@ module.exports = {
             return r;
         }
 
+        function hasEbayRestClient(src) {
+            var r = src && src.indexOf("require('ebay-rest-client')") > -1;
+            if (r) {
+                moduleOptions.moduleNames['ebay-rest-client'] = true;
+            }
+            return r;
+        }
+
         function hasCubejsAPI(src) {
             var checkFuncs = [hasModuleConfig, hasRaptorPromises, hasUserEbay, hasEbayRequestContext, hasEbayTracking ];
             checkFuncs.push(hasCommonsEbay);
             checkFuncs.push(hasEbayI18n);
             checkFuncs.push(hasEbayEp);
+            checkFuncs.push(hasEbayRestClient);
 
             var checkResults = _.map(checkFuncs, function(check) {
                 var r = check(src);

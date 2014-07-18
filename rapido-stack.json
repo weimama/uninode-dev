@@ -14,6 +14,10 @@
             "description": "Migrate from Cube.js Project to Unified Node.js Project",
             "file": "commands/command-migrate-pro.js"
         },
+        "migrate project": {
+            "description": "Migrate from Cube.js Project to Unified Node.js Project",
+            "file": "commands/command-migrate-project.js"
+        },
         "migrate ecbcontent": {
             "description": "Migrate from ebay 4cb content file to property file",
             "file": "commands/command-migrate-content.js"

@@ -24,7 +24,7 @@
         "pagename": "Collection_Ajax"
     },
     "/test": {
-        "pagename": "DefaultPage7"
+        "pagename": "DefaultPage"
     },
     "/cln/:username/:collectionName/:collectionId": {
         "pagename": "Collection"

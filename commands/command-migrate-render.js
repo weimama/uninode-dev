@@ -48,13 +48,40 @@ module.exports = {
 
         function hasRaptorJs2Render(src) {
             if(!src) return false;
+
+            var hasJs2Render = false;
             if(src.indexOf('.dataProviders') !== -1) {
-                return true;
+                hasJs2Render = true;
             }
             if(src.indexOf('.renderTemplate') !== -1) {
-                return true;
+                hasJs2Render = true;
             }
-            return false;
+
+            if(hasJs2Render) {
+                var esprima = require('esprima');
+                var ast = esprima.parse(src, {
+                    raw: true,
+                    tokens: true,
+                    range: true,
+                    comment: false
+                });
+                var hasToken = false;
+                ast.tokens.forEach(function(token) {
+                    if(token.value === 'dataProviders' || token.value === 'renderTemplate') {
+                        hasToken = true;
+                    }
+                });
+                //filter comments that contain dataProviders or renderTemplate
+                if(hasToken) {
+                    hasJs2Render = true;
+                } else {
+                    hasJs2Render = false;
+                }
+                // console.log(ast);
+            }
+
+
+            return hasJs2Render;
         }
 
         function transformFile(file) {
@@ -68,6 +95,7 @@ module.exports = {
 
             console.log('Transforming ' + file + '...');
             count++;
+            // return;
             var requireUnderscore = "var _ = require('underscore');";
             if(src.indexOf(requireUnderscore) === -1) {
                 src = requireUnderscore + ' ' + src;

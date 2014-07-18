@@ -1,0 +1,42 @@
+{
+    "/": {
+        "pagename": "DefaultPage"
+    },
+    "/raptor": {
+        "pagename": "DefaultPage"
+    },
+    "/cln/_mycollections": {
+        "pagename": "My_Collections"
+    },
+    "/cln/@@__@@__@@": {
+        "pagename": "My_Collections"
+    },
+    "/giftingcollections": {
+        "pagename": "Collection_Gifting"
+    },
+    "/cln/explorer/_ajax": {
+        "pagename": "Collection_Explorer_Ajax"
+    },
+    "/cln": {
+        "pagename": "Collection_Explorer"
+    },
+    "/cln/_ajax/:page/:owner/:collectionId": {
+        "pagename": "Collection_Ajax"
+    },
+    "/test": {
+        "pagename": "DefaultPage7"
+    },
+    "/cln/:username/:collectionName/:collectionId": {
+        "pagename": "Collection"
+    },
+    "/cln/:username//:collectionId": {
+        "pagename": "Collection"
+    },
+    "/cln/:username": {
+        "pagename": "Collection_Spoke"
+    },
+    "/admin/v6console/ValidateInternals": {
+        "pagename": "DefaultPage"
+    }
+
+}

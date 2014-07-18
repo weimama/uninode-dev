@@ -2,6 +2,10 @@
     "name": "raptor-dev",
     "description": "Commands for migrating to RaptorJS 3",
     "commands": {
+        "migrate render": {
+            "description": "Migrate render from Raptorjs2 to Raptorjs3",
+            "file": "commands/command-migrate-render.js"
+        },
         "migrate pro": {
             "description": "Migrate from Cube.js Project to Unified Node.js Project",
             "file": "commands/command-migrate-pro.js"

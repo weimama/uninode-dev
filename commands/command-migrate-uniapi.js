@@ -48,7 +48,7 @@ module.exports = {
         var moduleOptions = {};
         moduleOptions.moduleNames = {};
 
-        function hasModuleConfig(src) {
+        function hasModuleConfig(src, file) {
             var r = src && src.indexOf("require('module-config')") > -1;
             if (r) {
                 moduleOptions.moduleNames['module-config'] = true;
@@ -56,7 +56,7 @@ module.exports = {
             return r;
         }
 
-        function hasRaptorPromises(src) {
+        function hasRaptorPromises(src, file) {
             var r = src && src.indexOf("require('raptor/promises')") > -1;
             if (r) {
                 moduleOptions.moduleNames['raptor-promises'] = true;
@@ -64,7 +64,7 @@ module.exports = {
             return r;
         }
 
-        function hasUserEbay(src) {
+        function hasUserEbay(src, file) {
             var r = src && src.indexOf(".getLevel1UserId()") > -1;
             r = r || src && src.indexOf(".getAccountId()") > -1;
             r = r || src && src.indexOf(".getPersistentAccountId()") > -1;
@@ -76,7 +76,7 @@ module.exports = {
             return r;
         }
 
-        function hasEbayRequestContext(src) {
+        function hasEbayRequestContext(src, file) {
             var r = src && src.indexOf("require('ebay-request-context')") > -1;
             r = r || src && src.indexOf(".isHostInNetwork(") > -1;
             if (r) {
@@ -85,7 +85,7 @@ module.exports = {
             return r;
         }
 
-        function hasEbayTracking(src) {
+        function hasEbayTracking(src, file) {
             var r = src && src.indexOf("require('ebay-tracking')") > -1;
             r = r || src && src.indexOf(".trackVectorTag(") > -1;
             r = r || src && src.indexOf(".trackTag(") > -1;
@@ -96,7 +96,7 @@ module.exports = {
             return r;
         }
 
-        function hasCommonsEbay(src) {
+        function hasCommonsEbay(src, file) {
             var r = src && src.indexOf(".getSiteId()") > -1;
             r = r || src && src.indexOf(".getMarketplaceId(") > -1;
             r = r || src && src.indexOf(".getTerritoryId(") > -1;
@@ -106,7 +106,7 @@ module.exports = {
             return r;
         }
 
-        function hasEbayI18n(src) {
+        function hasEbayI18n(src, file) {
             var r = src && src.indexOf("require('ebay-i18n')") > -1;
             r = r || src && src.indexOf(".getContentManager(") > -1;
             if (r) {
@@ -115,7 +115,7 @@ module.exports = {
             return r;
         }
 
-        function hasEbayEp(src) {
+        function hasEbayEp(src, file) {
             var r = src && src.indexOf("require('ebay-ep')") > -1;
             if (r) {
                 moduleOptions.moduleNames['ebay-ep'] = true;
@@ -123,7 +123,7 @@ module.exports = {
             return r;
         }
 
-        function hasEbayRestClient(src) {
+        function hasEbayRestClient(src, file) {
             var r = src && src.indexOf("require('ebay-rest-client')") > -1;
             if (r) {
                 moduleOptions.moduleNames['ebay-rest-client'] = true;
@@ -131,7 +131,7 @@ module.exports = {
             return r;
         }
 
-        function hasEbayCookie(src) {
+        function hasEbayCookie(src, file) {
             var r = src && src.indexOf(".getCookieManager(") > -1;
             if (r) {
                 moduleOptions.moduleNames['cookies-ebay'] = true;
@@ -139,7 +139,7 @@ module.exports = {
             return r;
         }
 
-        function hasEbayCsrf(src) {
+        function hasEbayCsrf(src, file) {
             var r = src && src.indexOf("require('ebay-csrf')") > -1;
             if (r) {
                 moduleOptions.moduleNames['ebay-csrf'] = true;
@@ -147,7 +147,7 @@ module.exports = {
             return r;
         }
 
-        function hasRaptor(src) {
+        function hasRaptor(src, file) {
             var r = src && src.indexOf("require('raptor')") > -1;
             if (r) {
                 moduleOptions.moduleNames['raptor'] = true;
@@ -155,7 +155,34 @@ module.exports = {
             return r;
         }
 
-        function hasCubejsAPI(src) {
+        function hasEbayApiFolder(src, file) {
+            if(!file) {
+                return false;
+            }
+            if(file.indexOf('/ebay-api/') === -1) {
+                return false;
+            }
+            var r = src && src.indexOf("JSON.parse") > -1;
+            if (r) {
+                moduleOptions.moduleNames['ebay-api'] = true;
+            }
+
+            return r;
+        }
+
+        function isMigrateFolder(src, file) {
+            if(file && file.indexOf('/migrate/') > -1) {
+                return true;
+            }
+            return false;
+        }
+
+        function hasCubejsAPI(src, file) {
+
+            if(isMigrateFolder(src, file) ) {
+                return false;
+            }
+
             var checkFuncs = [hasModuleConfig, hasRaptorPromises, hasUserEbay, hasEbayRequestContext, hasEbayTracking ];
             checkFuncs.push(hasCommonsEbay);
             checkFuncs.push(hasEbayI18n);
@@ -164,9 +191,10 @@ module.exports = {
             checkFuncs.push(hasEbayCookie);
             checkFuncs.push(hasEbayCsrf);
             checkFuncs.push(hasRaptor);
+            checkFuncs.push(hasEbayApiFolder);
 
             var checkResults = _.map(checkFuncs, function(check) {
-                var r = check(src);
+                var r = check(src, file);
                 // console.log(check, r);
                 return r;
             });
@@ -204,7 +232,7 @@ module.exports = {
             var src = fs.readFileSync(file, {
                 encoding: 'utf8'
             });
-            if (hasCubejsAPI(src)) {
+            if (hasCubejsAPI(src, file)) {
                 console.log('Transforming ' + file + '...');
                 fileCount++;
                 // return;

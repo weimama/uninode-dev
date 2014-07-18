@@ -99,9 +99,18 @@ module.exports = {
         }
 
         function hasEbayI18n(src) {
-            var r = src && src.indexOf("require('ebay-i18n')") > -1;
+            var r = src && src.indexOf("require('ebay-i18n')") > -1;            
+            r = r || src && src.indexOf(".getContentManager(") > -1;
             if (r) {
                 moduleOptions.moduleNames['ebay-i18n'] = true;
+            }
+            return r;
+        }
+
+        function hasEbayEp(src) {
+            var r = src && src.indexOf("require('ebay-ep')") > -1;
+            if (r) {
+                moduleOptions.moduleNames['ebay-ep'] = true;
             }
             return r;
         }
@@ -110,6 +119,7 @@ module.exports = {
             var checkFuncs = [hasModuleConfig, hasRaptorPromises, hasUserEbay, hasEbayRequestContext, hasEbayTracking ];
             checkFuncs.push(hasCommonsEbay);
             checkFuncs.push(hasEbayI18n);
+            checkFuncs.push(hasEbayEp);
 
             var checkResults = _.map(checkFuncs, function(check) {
                 var r = check(src);

@@ -68,6 +68,8 @@ module.exports = {
             var r = src && src.indexOf(".getLevel1UserId()") > -1;
             r = r || src && src.indexOf(".getAccountId()") > -1;
             r = r || src && src.indexOf(".getPersistentAccountId()") > -1;
+            r = r || src && src.indexOf(".getJSPersistentUserId()") > -1;
+
             if (r) {
                 moduleOptions.moduleNames['user-ebay'] = true;
             }
@@ -92,6 +94,8 @@ module.exports = {
 
         function hasCommonsEbay(src) {
             var r = src && src.indexOf(".getSiteId()") > -1;
+            r = r || src && src.indexOf(".getMarketplaceId(") > -1;
+            r = r || src && src.indexOf(".getTerritoryId(") > -1;
             if (r) {
                 moduleOptions.moduleNames['commons-ebay'] = true;
             }
@@ -99,7 +103,7 @@ module.exports = {
         }
 
         function hasEbayI18n(src) {
-            var r = src && src.indexOf("require('ebay-i18n')") > -1;            
+            var r = src && src.indexOf("require('ebay-i18n')") > -1;
             r = r || src && src.indexOf(".getContentManager(") > -1;
             if (r) {
                 moduleOptions.moduleNames['ebay-i18n'] = true;

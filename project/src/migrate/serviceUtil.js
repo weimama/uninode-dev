@@ -75,6 +75,11 @@ restClient.prototype.getClient = function getClient(opts, ctx) {
     return self;
 };
 
+restClient.prototype.handler = function handler() {
+    var self = this;
+    return self;
+};
+
 restClient.prototype.operationName = function operationName(operationname) {
     var self = this;
     self.options.operationName = operationname;

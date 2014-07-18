@@ -78,6 +78,7 @@ module.exports = {
 
         function hasEbayRequestContext(src) {
             var r = src && src.indexOf("require('ebay-request-context')") > -1;
+            r = r || src && src.indexOf(".isHostInNetwork(") > -1;
             if (r) {
                 moduleOptions.moduleNames['ebay-request-context'] = true;
             }

@@ -165,7 +165,7 @@ module.exports = {
             if(!file) {
                 return false;
             }
-            if(file.indexOf('/ebay-api/') === -1) {
+            if(file.indexOf('/src/ebay-api/') === -1) {
                 return false;
             }
             var r = src && src.indexOf("JSON.parse") > -1;
@@ -184,6 +184,18 @@ module.exports = {
             var r = src && src.indexOf("require('ebay-api") > -1;
             if (r) {
                 moduleOptions.moduleNames['ebay-api'] = true;
+            }
+
+            return r;
+        }
+
+        function hasEbayGuid(src, file) {
+            if(!file || !src) {
+                return false;
+            }
+            var r = src.indexOf("require('ebay-guid').getGuid") > -1;
+            if (r) {
+                moduleOptions.moduleNames['ebay-guid'] = true;
             }
 
             return r;
@@ -211,8 +223,11 @@ module.exports = {
             checkFuncs.push(hasEbayCookie);
             checkFuncs.push(hasEbayCsrf);
             checkFuncs.push(hasRaptor);
-            checkFuncs.push(hasEbayApiFolder);
             checkFuncs.push(hasEbayApiService);
+            checkFuncs.push(hasEbayApiFolder);
+            checkFuncs.push(hasEbayGuid);
+
+
 
             var checkResults = _.map(checkFuncs, function(check) {
                 var r = check(src, file);
@@ -243,10 +258,17 @@ module.exports = {
             if (findSrc === true) {
                 moduleOptions.migratePath = migratePath;
             }
-            var pos = file.lastIndexOf('/src/');
-            if(pos === -1) {
-                pos = file.lastIndexOf('/tests/')
+            var pos = -1;
+            if(file && file.indexOf('/tests/') !== -1) {
+                pos = file.lastIndexOf('/tests/');
+            } else {
+                pos = file.lastIndexOf('/src/');
             }
+            // pos = file.lastIndexOf('/src/');
+            // if(pos === -1) {
+            //     pos = file.lastIndexOf('/tests/')
+            // }
+
             if(pos !== -1) {
                 var projectSrcDir = file.substring(0, pos+1);
                 moduleOptions.projectSrcDir = projectSrcDir;
@@ -270,7 +292,9 @@ module.exports = {
                 encoding: 'utf8'
             });
             if (hasCubejsAPI(src, file)) {
+
                 console.log('Transforming ' + file + '...');
+
                 fileCount++;
                 // return;
                 args.from = nodePath.dirname(file);

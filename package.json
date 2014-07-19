@@ -3,7 +3,9 @@
     "description": "Developer tools for Unified Node.js",
     "keywords": [
         "rapido",
-        "cubejs"
+        "cubejs",
+        "uninode",
+        "unified node.js"
     ],
     "scripts": {
         "test": "node_modules/.bin/mocha --ui bdd --reporter spec ./test && node_modules/.bin/jshint lib && node_modules/.bin/jshint commands"
@@ -34,11 +36,11 @@
         "underscore": "^1.6.0"
     },
     "bin": {
-        "uninode": "bin/raptor-dev"
+        "uninode-dev": "bin/uninode-dev"
     },
     "repository": {
         "type": "git",
-        "url": "https://github.com/raptorjs3/raptor-dev.git"
+        "url": "https://github.com/weimama/uninode-dev.git"
     },
     "devDependencies": {
         "chai": "^1.9.1",

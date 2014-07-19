@@ -3,7 +3,7 @@
 var path = require('path');
 
 require('rapido').run(process.argv, {
-    title: 'Commands for RaptorJS 3 development',
+    title: 'Commands for Unified Node.js 3 development',
     configFilename: 'uninode-dev.json',
     stackDirs: [
         path.join(__dirname, '..')

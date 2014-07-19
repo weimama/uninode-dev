@@ -169,6 +169,7 @@ module.exports = {
                 return false;
             }
             var r = src && src.indexOf("JSON.parse") > -1;
+            r = r || src && src.indexOf("require('ebay-api/") > -1;
             if (r) {
                 moduleOptions.moduleNames['ebay-api'] = true;
             }
@@ -228,10 +229,26 @@ module.exports = {
             if (findSrc === true) {
                 moduleOptions.migratePath = migratePath;
             }
-            var pos = file.lastIndexOf('/src');
+            var pos = file.lastIndexOf('/src/');
+            if(pos === -1) {
+                pos = file.lastIndexOf('/tests/')
+            }
             if(pos !== -1) {
-                var projectSrcDir = file.substring(0, pos);
+                var projectSrcDir = file.substring(0, pos+1);
                 moduleOptions.projectSrcDir = projectSrcDir;
+                moduleOptions.srcRelative = '';
+                var pathArrFile = file.split('/');
+                var pathArrSrcDir = projectSrcDir.split('/');
+                var len1 = pathArrFile.length;
+                var len2 = pathArrSrcDir.length;
+                if(len1 === len2) {
+                    moduleOptions.srcRelative = '';
+                } else if (len1 > len2) {
+                    for(var i=0;i<len1-len2;i++) {
+                        moduleOptions.srcRelative = moduleOptions.srcRelative + '../';
+                    }
+                }
+
             }
 
 

@@ -201,6 +201,17 @@ module.exports = {
             return r;
         }
 
+        function hasEbayDeviceDetection(src, file) {
+            if(!file || !src) {
+                return false;
+            }
+            var r = src.indexOf("require('ebay-device-detection')") > -1;
+            if (r) {
+                moduleOptions.moduleNames['ebay-device-detection'] = true;
+            }
+            return r;
+        }
+
 
         function isMigrateFolder(src, file) {
             if(file && file.indexOf('/migrate/') > -1) {
@@ -226,7 +237,7 @@ module.exports = {
             checkFuncs.push(hasEbayApiService);
             checkFuncs.push(hasEbayApiFolder);
             checkFuncs.push(hasEbayGuid);
-
+            checkFuncs.push(hasEbayDeviceDetection);
 
 
             var checkResults = _.map(checkFuncs, function(check) {

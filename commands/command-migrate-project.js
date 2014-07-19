@@ -84,8 +84,8 @@ module.exports = {
                 cmd = 'cp -rf '+exampleProDir + '/* ' + projectDir;
                 exec(cmd);
 
-                // exec('raptor-dev migrate cleanmiddleware ' + projectSrcDir);
-                // exec('raptor-dev migrate render ' + projectSrcDir);
+                exec('raptor-dev migrate cleanmiddleware ' + projectSrcDir);
+                exec('raptor-dev migrate render ' + projectSrcDir);
                 exec('raptor-dev migrate uniapi ' + projectSrcDir);
 
                 console.log('All files migrated to Unified Stack files.');

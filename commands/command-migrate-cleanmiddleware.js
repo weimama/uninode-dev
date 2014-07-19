@@ -55,6 +55,9 @@ module.exports = {
             if(src.indexOf('.middleware.tracking') !== -1) {
                 return true;
             }
+            if(src.indexOf('.middleware.siteSpeedGauge') !== -1) {
+                return true;
+            }
             if(src.indexOf('.middleware.getQualifiedTreatments') !== -1) {
                 return true;
             }

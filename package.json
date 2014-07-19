@@ -1,6 +1,6 @@
 {
-    "name": "raptor-dev",
-    "description": "Developer tools for RaptorJS",
+    "name": "uninode-dev",
+    "description": "Developer tools for Unified Node.js",
     "keywords": [
         "rapido",
         "cubejs"
@@ -34,7 +34,7 @@
         "underscore": "^1.6.0"
     },
     "bin": {
-        "raptor-dev": "bin/raptor-dev"
+        "uninode": "bin/raptor-dev"
     },
     "repository": {
         "type": "git",

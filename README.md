@@ -1,17 +1,14 @@
-raptor-dev
+uninode-dev
 =========================
 
 # Install
 ```
-git clone git@github.com:raptorjs3/raptor-dev.git
-cd raptor-dev
+git clone git@github.com:weimama/uninode-dev.git
+cd uninode-dev
 npm link
 ```
 
-# Convert AMD modules to CommonJS modules
-
-__Warning:__ Before running this script make sure all code changes are checked in.
+# Covert Cube.js Project to Unified Node.js Project
 ```
-cd <my-project/lib
-raptor-dev migrate javascript
+uninode-dev migrate project projectDirectory
 ```

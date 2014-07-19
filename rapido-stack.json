@@ -1,5 +1,5 @@
 {
-    "name": "raptor-dev",
+    "name": "uninode-dev",
     "description": "Commands for migrating to RaptorJS 3",
     "commands": {
         "migrate cleanmiddleware": {

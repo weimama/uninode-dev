@@ -4,7 +4,7 @@ var path = require('path');
 
 require('rapido').run(process.argv, {
     title: 'Commands for RaptorJS 3 development',
-    configFilename: 'raptor-dev.json',
+    configFilename: 'uninode-dev.json',
     stackDirs: [
         path.join(__dirname, '..')
     ],
@@ -12,7 +12,7 @@ require('rapido').run(process.argv, {
         path.join(__dirname, '../node_modules')
     ],
     enabledStacks: [
-        'raptor-dev',
+        'uninode-dev',
         'module'
     ],
     version: function() {

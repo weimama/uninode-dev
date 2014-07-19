@@ -103,6 +103,7 @@ module.exports = {
             r = r || src && src.indexOf(".attributes.request") > -1;
             r = r || src && src.indexOf(".ebay.getLocale(") > -1;
             r = r || src && src.indexOf(".ebay.locale.language") > -1;
+            r = r || src && src.indexOf(".outboundContext") > -1;
 
             if (r) {
                 moduleOptions.moduleNames['commons-ebay'] = true;

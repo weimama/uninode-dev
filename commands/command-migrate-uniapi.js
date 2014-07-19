@@ -169,13 +169,26 @@ module.exports = {
                 return false;
             }
             var r = src && src.indexOf("JSON.parse") > -1;
-            r = r || src && src.indexOf("require('ebay-api/") > -1;
+            if (r) {
+                moduleOptions.moduleNames['ebay-api-folder'] = true;
+            }
+
+            return r;
+        }
+
+        function hasEbayApiService(src, file) {
+            if(!file) {
+                return false;
+            }
+
+            var r = src && src.indexOf("require('ebay-api") > -1;
             if (r) {
                 moduleOptions.moduleNames['ebay-api'] = true;
             }
 
             return r;
         }
+
 
         function isMigrateFolder(src, file) {
             if(file && file.indexOf('/migrate/') > -1) {
@@ -199,6 +212,7 @@ module.exports = {
             checkFuncs.push(hasEbayCsrf);
             checkFuncs.push(hasRaptor);
             checkFuncs.push(hasEbayApiFolder);
+            checkFuncs.push(hasEbayApiService);
 
             var checkResults = _.map(checkFuncs, function(check) {
                 var r = check(src, file);

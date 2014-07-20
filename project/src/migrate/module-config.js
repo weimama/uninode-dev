@@ -5,7 +5,7 @@ var _ = require('underscore');
 
 function ModuleConfig(options, inherits) {
     _.extend(this, options || {});
-    _.default(this, inherits || {});
+    _.defaults(this, inherits || {});
 }
 ModuleConfig.prototype.module = function (m) {
     return new ModuleConfig({ source: m }, this);

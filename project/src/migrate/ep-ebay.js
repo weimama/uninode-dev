@@ -12,7 +12,7 @@ module.exports.middleware.getQualifiedTreatments = function(options) {
 };
 
 module.exports.getEpContext = function(req) {
-    var defer = require('q').deferred();
+    var defer = require('q').defer();
     ebayEp.exp(req, null, function(err, exp) {
         if(err || !exp) {
             return defer.reject(err);

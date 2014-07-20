@@ -25,9 +25,9 @@ module.exports = {
         if (!files || !files.length) {
             throw 'one or more files is required';
         }
-        
+
         var rootDir = args['root-dir'];
-        
+
         if (rootDir) {
             rootDir = nodePath.resolve(process.cwd(), rootDir);
         } else {
@@ -42,7 +42,7 @@ module.exports = {
 
     },
 
-    
+
 
     run: function(args, config, rapido) {
         var rootDir = args.rootDir;
@@ -93,7 +93,7 @@ module.exports = {
             }
 
             if (src !== transformed) {
-                fs.writeFileSync(file, transformed, {encoding: 'utf8'});    
+                fs.writeFileSync(file, transformed, {encoding: 'utf8'});
             }
         }
 
@@ -123,7 +123,7 @@ module.exports = {
                             transformFile(file);
                         }
                     }
-                    
+
                 }
             },
             function(err) {
@@ -133,6 +133,6 @@ module.exports = {
                 }
                 console.log('All taglibs migrated');
             });
-        
+
     }
 };

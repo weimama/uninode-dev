@@ -2,6 +2,10 @@
     "name": "uninode-dev",
     "description": "Commands for migrating to RaptorJS 3",
     "commands": {
+        "migrate templatepatch": {
+            "description": "Migrate template file with patching gh and tracking",
+            "file": "commands/command-migrate-templatepatch.js"
+        },
         "migrate cleanmiddleware": {
             "description": "Migrate render from cubejs middleware to unified middleware",
             "file": "commands/command-migrate-cleanmiddleware.js"

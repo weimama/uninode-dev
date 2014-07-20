@@ -1,14 +1,22 @@
 'use strict';
 
 require('raptor-polyfill');
-var nodePath = require('path');
+var path = require('path');
 var fs = require('fs');
 var _ = require('underscore');
 var shell = require('shelljs');
 
 function exec(cmd) {
+    if(cmd && cmd.indexOf('uninode-dev') === -1) {
+        return;
+    }
     console.log(cmd);
-    return shell.exec(cmd);
+    // return;
+    var r = shell.exec(cmd);
+    if(r && r.code !== 0) {
+        console.log(r);
+    }
+    return r;
 }
 
 module.exports = {
@@ -38,8 +46,8 @@ module.exports = {
             files = [process.cwd()];
         }
 
-        var searchPath = files.filter(function(path) {
-            var stat = fs.statSync(path);
+        var searchPath = files.filter(function(filePath) {
+            var stat = fs.statSync(filePath);
             return stat.isDirectory();
         });
 
@@ -64,17 +72,42 @@ module.exports = {
         // console.log(args);
 
         // return;
+
+        var hasDestProject = false;
+        if(args.destProject) {
+            hasDestProject = true;
+        }
+        args.destProject = args.destProject || path.resolve(args.sourceProject) + '-migrate';
+
+
+        args.sourceProject = path.resolve(args.sourceProject);
+        args.destProject = path.resolve(args.destProject);
+
         var file = args.destProject;
+
+        exec('mkdir -p ' + file);
+
+        exec('rm -rf migrate-cubejs');
+        exec('git clone https://github.paypal.com/psteeleidem/migrate-cubejs.git');
+        exec('cd migrate-cubejs && npm install --registry http://npm.paypal.com/');
+
+        exec('cd migrate-cubejs/migrate-fe-collections && ./migrate.sh ' + args.sourceProject + ' ' + args.destProject);
+
+        // return;
+
+
         if(!file) {
             file = args.sourceProject;
         }
 
         var fs = require('fs');
-        var path = require('path');
+        // var path = require('path');
         var projectDir = file;
         var projectSrcDir = path.resolve(file, './src');
         var componentsDir = path.resolve(file, './src/ui/components');
         var projectTestsDir = path.resolve(file, './tests');
+
+
 
 
         // console.log('cnt:', contentDir);
@@ -82,6 +115,8 @@ module.exports = {
 
             var r ;
             var cmd = '';
+
+
             // console.log('---: Migrate ebay 4cb content file to Property file');
             // r = shell.exec('raptor-dev migrate ecbcontent ' + projectDir);
             // console.log('---: Migrate AMD module to CommonsJS module');
@@ -100,6 +135,8 @@ module.exports = {
             // console.log('---exampleProDir:', exampleProDir);
             cmd = 'cp -rf '+exampleProDir + '/* ' + projectDir;
             exec(cmd);
+            exec('uninode-dev migrate templatepatch ' + projectSrcDir);
+            return;
 
             exec('uninode-dev migrate cleanmiddleware ' + projectSrcDir);
             exec('uninode-dev migrate render ' + projectSrcDir);
@@ -110,10 +147,7 @@ module.exports = {
             console.log('Project Dir or Project/src Dir does not exist');
         }
 
-        // console.log(files);
-        files.forEach(function(file) {
 
-        });
 
 
 

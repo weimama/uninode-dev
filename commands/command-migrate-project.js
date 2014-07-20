@@ -74,6 +74,7 @@ module.exports = {
         var projectDir = file;
         var projectSrcDir = path.resolve(file, './src');
         var componentsDir = path.resolve(file, './src/ui/components');
+        var projectTestsDir = path.resolve(file, './tests');
 
 
         // console.log('cnt:', contentDir);

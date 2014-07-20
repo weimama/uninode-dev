@@ -51,10 +51,12 @@ module.exports = {
             if(!src) {
                 return;
             }
-            if(!file.endsWith('/collection.rhtml')) {
+
+            if(!file.endsWith('.rhtml')) {
                 return;
             }
-            if(!src.indexOf('<head>') && !src.indexOf('<body>')) {
+
+            if( src.indexOf('<head>') === -1 && src.indexOf('<body>') === -1) {
                 return;
             }
 

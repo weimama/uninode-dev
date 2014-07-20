@@ -1,6 +1,8 @@
 'use strict';
 var moduleConfig = require('module-config-inc');
 var Q = require('q');
+var _ = require('underscore');
+
 function ModuleConfig(options, inherits) {
     _.extend(this, options || {});
     _.default(this, inherits || {});

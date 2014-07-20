@@ -1,0 +1,19 @@
+{
+    "raptor-config": [
+        {
+            "target": "Global",
+            "project": "collections",
+            "config": "ServiceEndpoints",
+            "version": "0.0.2"
+        },
+        {
+            "target": "Global",
+            "project": "collections",
+            "config": "explorer",
+            "version": "0.0.2"
+        }
+    ],
+    "colweb": {
+        "log-levels": "ROOT=WARN ebay-site-speed=WARN"
+    }
+}

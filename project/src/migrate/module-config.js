@@ -16,6 +16,8 @@ ModuleConfig.prototype.load = function (onload, options) {
     options.source = options.source || this.source;
     var deferred = Q.defer();
     moduleConfig(options.source, function (err, config) {
+        config = config || {};
+        config.on = function() {};
         if (onload) {
             onload(config);
         } else {

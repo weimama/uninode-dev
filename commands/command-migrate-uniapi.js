@@ -254,6 +254,9 @@ module.exports = {
         }
 
         function transformFile(file) {
+            if(file.indexOf('/migrate/') !== -1) {
+                return;
+            }
             moduleOptions.file = file;
             var fileArr = file.split('/');
             // console.log(fileArr);

@@ -141,8 +141,7 @@ module.exports = {
             var exampleProDir = path.resolve(__dirname, '../project');
             // console.log('---exampleProDir:', exampleProDir);
             exec('mkdir -p ' + projectSrcDir+'/migrate');
-            cmd = 'cp -rf '+exampleProDir + '/src/migrate/* ' + projectDir;
-            exec(cmd);
+
 
             exec('uninode-dev migrate templatepatch ' + projectSrcDir);
             // return;
@@ -150,6 +149,9 @@ module.exports = {
             exec('uninode-dev migrate cleanmiddleware ' + projectSrcDir);
             exec('uninode-dev migrate render ' + projectSrcDir);
             exec('uninode-dev migrate uniapi ' + projectSrcDir);
+
+            cmd = 'cp -rf '+exampleProDir + '/src/migrate/* ' + ' ' + projectSrcDir + '/migrate';
+            exec(cmd);
 
             console.log('All files migrated to Unified Stack files.');
         } else {

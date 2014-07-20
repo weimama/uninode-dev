@@ -7,9 +7,10 @@ var _ = require('underscore');
 var shell = require('shelljs');
 
 function exec(cmd) {
-    if(cmd && cmd.indexOf('uninode-dev') === -1) {
-        return;
-    }
+    // if(cmd && cmd.indexOf('uninode-dev') === -1) {
+    //     return;
+    // }
+
     console.log(cmd);
     // return;
     var r = shell.exec(cmd);
@@ -85,11 +86,17 @@ module.exports = {
 
         var file = args.destProject;
 
+        var execDir = process.cwd();
+
         exec('mkdir -p ' + file);
 
-        exec('rm -rf migrate-cubejs');
-        exec('git clone https://github.paypal.com/psteeleidem/migrate-cubejs.git');
-        exec('cd migrate-cubejs && npm install --registry http://npm.paypal.com/');
+        var migrateScriptDir = path.resolve(execDir, 'migrate-cubejs/migrate-fe-collections');
+
+        if(! require('fs').existsSync(migrateScriptDir) ) {
+            exec('rm -rf migrate-cubejs');
+            exec('git clone https://github.paypal.com/psteeleidem/migrate-cubejs.git');
+            exec('cd migrate-cubejs && npm install --registry http://npm.paypal.com/');
+        }
 
         exec('cd migrate-cubejs/migrate-fe-collections && ./migrate.sh ' + args.sourceProject + ' ' + args.destProject);
 
@@ -100,7 +107,7 @@ module.exports = {
             file = args.sourceProject;
         }
 
-        var fs = require('fs');
+
         // var path = require('path');
         var projectDir = file;
         var projectSrcDir = path.resolve(file, './src');
@@ -133,10 +140,12 @@ module.exports = {
             // r = shell.exec('raptor-dev migrate inlinescript ' + projectSrcDir);
             var exampleProDir = path.resolve(__dirname, '../project');
             // console.log('---exampleProDir:', exampleProDir);
-            cmd = 'cp -rf '+exampleProDir + '/* ' + projectDir;
+            exec('mkdir -p ' + projectSrcDir+'/migrate');
+            cmd = 'cp -rf '+exampleProDir + '/src/migrate/* ' + projectDir;
             exec(cmd);
+
             exec('uninode-dev migrate templatepatch ' + projectSrcDir);
-            return;
+            // return;
 
             exec('uninode-dev migrate cleanmiddleware ' + projectSrcDir);
             exec('uninode-dev migrate render ' + projectSrcDir);

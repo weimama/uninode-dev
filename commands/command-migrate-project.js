@@ -34,6 +34,11 @@ module.exports = {
             description: 'Only transform a single file',
             type: 'string'
         },
+        onlytemplate: {
+            description: 'Skip transforming backendAPI',
+            type: 'boolean',
+            default: false
+        },
         dest: {
             description: 'destination folder',
             type: 'string'
@@ -60,6 +65,7 @@ module.exports = {
             files: files,
             skipTransformRequire: args['skip-transform-require'],
             sourceProject: sourceProjectDir,
+            onlyTemplate: args['onlytemplate'],
             destProject: args['dest']
         };
     },
@@ -100,7 +106,9 @@ module.exports = {
 
         exec('cd migrate-cubejs/migrate-fe-collections && ./migrate.sh ' + args.sourceProject + ' ' + args.destProject);
 
-        // return;
+        if(args.onlyTemplate) {
+            return;
+        }
 
 
         if(!file) {

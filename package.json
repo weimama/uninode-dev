@@ -48,5 +48,5 @@
     "jshint": "~2.3.0",
     "mocha": "~1.15.1"
   },
-  "version": "0.2.13-beta"
+  "version": "0.1.0"
 }

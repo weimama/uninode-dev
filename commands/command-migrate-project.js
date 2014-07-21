@@ -160,6 +160,9 @@ module.exports = {
 
             cmd = 'cp -rf '+exampleProDir + '/src/migrate/* ' + ' ' + projectSrcDir + '/migrate';
             exec(cmd);
+            exec('cp ' + exampleProDir + '/index.js' + ' ' + projectDir + '/');
+            exec('cp ' + exampleProDir + '/package.json' + ' ' + projectDir + '/');
+            exec('cp ' + exampleProDir + '/config/config.json' + ' ' + projectDir + '/config/');
 
             console.log('All files migrated to Unified Stack files.');
         } else {

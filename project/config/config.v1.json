@@ -96,13 +96,7 @@
 
     "express": {},
 
-    "view-engine": {
-        "engines": {
-            "view-engine-raptor": {
-                "extensions": ["rhtml"]
-            }
-        }
-    },
+    "view engines": {},
 
     "raptor-optimizer": {
         "plugins": {
@@ -119,6 +113,17 @@
         "transforms": [
             "raptor-optimizer-resolve-css-urls"
         ]
+    },
+
+    "view-engine": {
+        "engines": {
+            "view-engine-dust": {
+                "extensions": ["dust"]
+            },
+            "view-engine-raptor": {
+                "extensions": ["rhtml"]
+            }
+        }
     },
 
     "middleware": {
@@ -260,8 +265,62 @@
             },
             "securityService": true
         }
-    }
-    ,"COLLECTION": "www.collect.stratus.ebay.com/collect/collections/v1",
+    },
+    "colweb": {
+        "COLLECTION": "www.collect.stratus/collect/collections/v1",
+        "COLLECTION_JSONP": "svcs.ebay.com/buying/collections/v1",
+        "COLLECTION_WIDGET_JS": "http://ir.ebaystatic.com/z/ml/bakgucg2du5i1jwp0oc5dvy4a.js",
+        "PROFILE": "mywrldsvc-web-1.stratus/mywrldsvc/v1",
+        "FOLLOW": "mbe.vip/merbak/v0",
+        "FOLLOW_WIDGET_CSS": "http://ir.ebaystatic.com/z/2j/052xrawwvizmfpx5g3jrlvgry.css",
+        "FOLLOW_WIDGET_JS": "http://ir.ebaystatic.com/z/qm/ynqj2435jay0lahxaq0zciwcn.js",
+        "SHARE_WIDGET_JS": "http://ir.ebaystatic.com/rs/v/2kgfdz0qpu52zpqqpjhgx35xjqf.js",
+        "EXPLORER_COLLECTION": "http://www.content.stratus/contentsv",
+        "MARS": "www.meta.stratus.ebay.com/metadata/v1/getPageMetacontent",
+        "SHARE_WIDGET_JS_MOBILE": "http://ir.ebaystatic.com/rs/v/115r5ngg5q1nfbm1nsptpousyyl.js",
+        "PROFILE_TIMEOUT": 2500,
+        "PROFILE_RETRY": 1,
+        "PROFILE_MARKDOWN_TH": 3000,
+        "PROFILE_MAX_SOCKETS": 500,
+        "COLLECTION_TIMEOUT": 5000,
+        "COLLECTION_RETRY": 1,
+        "COLLECTION_MARKDOWN_TH": 3000,
+        "COLLECTION_MAX_SOCKETS": 500,
+        "FOLLOW_TIMEOUT": 2500,
+        "FOLLOW_RETRY": 1,
+        "FOLLOW_MARKDOWN_TH": 3000,
+        "FOLLOW_MAX_SOCKETS": 500,
+        "MARS_TIMEOUT": 2500,
+        "MARS_RETRY": 1,
+        "MARS_MARKDOWN_TH": 3000,
+        "MARS_MAX_SOCKETS": 500,
+        "HIDE_FOLLOW_BUTTON_SPOKEPAGE": "false",
+        "HIDE_EDIT_BUTTON_SPOKEPAGE": "false",
+        "HIDE_PRIVACY_SETTINGS_SPOKEPAGE": "false",
+        "HIDE_EDIT_BUTTON_FOR_MOBILE_TABLET_SPOKEPAGE": "true",
+        "ENABLE_MOBILE_TABLET_SPOKEPAGE_EXPERIENCE": "true",
+        "ENABLE_PRODUCT_TOUR": "false",
+        "GIFTING_CURATOR": "GiftCurator",
+        "ENABLE_MARS_CALL": "false",
+        "ENABLE_SIMILARCOLLECTIONS_WIDGET": "true",
+        "SIMILAR_COLLECTIONS_WIDGET_ENDPOINT": "http://svcs.ebay.com/contentsv/collection/component/cb?pid=201",
+        "ENABLE_FOLLOWERS_LINK_ON_PROFILE_PAGE": "true",
+        "ENABLE_COMMENTING_LIST": [
+            "0"
+        ],
+        "ENABLE_COMMENTING_GBH": "false",
+        "COMMENTING_WIDGET_JS": "http://ir.ebaystatic.com/rs/v/mhwfzzwire021fwcp5vnhbfx3ax.js",
+        "categories": [
+            "Collectibles|1",
+            "Electronics|117503",
+            "Fashion|377",
+            "Motors|63852",
+            "Music|11233",
+            "Sports|888"
+        ],
+        "enableExplorer": false
+    },
+    "COLLECTION": "www.collect.stratus.ebay.com/collect/collections/v1",
     "COLLECTION_JSONP": "svcs.ebay.com/buying/collections/v1",
     "COLLECTION_WIDGET_JS": "http://ir.ebaystatic.com/z/ml/bakgucg2du5i1jwp0oc5dvy4a.js",
     "PROFILE": "mywrldsvc-web-1.stratus.phx.ebay.com/mywrldsvc/v1",
@@ -302,7 +361,6 @@
     "ENABLE_COMMENTING_LIST": [
         "0"
     ],
-    "ENABLE_COMMENTING_PRODUCT_TOUR_LIST": [0],
     "ENABLE_COMMENTING_GBH": "false",
     "COMMENTING_WIDGET_JS": "http://ir.ebaystatic.com/rs/v/mhwfzzwire021fwcp5vnhbfx3ax.js",
     "ENABLE_CONCEPT_WIDGET_WITH_SITEID": [

@@ -12,3 +12,5 @@ npm link
 ```
 uninode-dev migrate project projectDirectory
 ```
+By default, it will transform the project into another directory with the name
+projectDirectory-migrate.

@@ -40,6 +40,7 @@
         "optimizer-plugin-inc": "^0.1.2",
         "pplogger": "^0.2.3",
         "q": "^1.0.1",
+        "raptor-async": "^0.2.6-beta",
         "raptor-optimizer": "^0.2.58-beta",
         "raptor-promises": "^0.2.2-beta",
         "raptor-renderer": "^0.2.5-beta",

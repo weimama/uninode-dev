@@ -142,13 +142,13 @@
 
         "cal": {
             "enabled": true,
-            "priority": 100,
+            "priority": 1000,
             "module": "cal/middleware"
         },
 
         "logger": {
             "enabled": true,
-            "priority": 101,
+            "priority": 1010,
             "module": {
                 "name": "pplogger",
                 "arguments": [{
@@ -163,34 +163,35 @@
 
         "commonsebay": {
             "enabled": true,
-            "priority": 110,
+            "priority": 1100,
             "module": "commons-ebay/middleware"
         },
 
         "cookies": {
             "enabled": true,
-            "priority": 111,
+            "priority": 1110,
             "module": "cookies-ebay/middleware"
         },
 
         "locale": {
             "enabled": true,
-            "priority": 112,
+            "priority": 1120,
             "module": "locale-ebay"
         },
 
         "tracking": {
             "enabled": true,
-            "priority": 113,
+            "priority": 1130,
             "module": {
                 "name": "tracking-ebay",
                 "method": "tracking"
             }
         },
 
+
         "validateinternals-ebay": {
             "enabled": true,
-            "priority": 114,
+            "priority": 1140,
             "module": {
                 "name": "validateinternals-ebay",
                 "method": "middleware"
@@ -210,21 +211,27 @@
              }
         },*/
 
+        "experimentation": {
+            "enabled": true,
+            "priority": 1150,
+            "module": "experimentation-ebay/middleware"
+        },
+
         "servicecore": {
             "enabled": true,
-            "priority": 117,
+            "priority": 1170,
             "module": "servicecore"
         },
 
         "global-header": {
             "enabled": true,
-            "priority": 118,
+            "priority": 1180,
             "module": "global-header-ebay/middleware"
         },
 
         "site-speed": {
             "enabled": true,
-            "priority": 119,
+            "priority": 1190,
             "module": "site-speed-ebay"
         }
     },

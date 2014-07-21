@@ -24,6 +24,7 @@
         "dustjs-linkedin": "~2.3.5",
         "environment-inc": "^0.1.2",
         "ep-mock-ebay": "^0.0.2",
+        "experimentation-ebay": "^0.1.1",
         "express": "^4.6.1",
         "fluid-ebay": "^0.1.3-beta",
         "follow-ebay": "0.1.0-beta",

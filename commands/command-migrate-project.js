@@ -158,11 +158,15 @@ module.exports = {
             exec('uninode-dev migrate render ' + projectSrcDir);
             exec('uninode-dev migrate uniapi ' + projectSrcDir);
 
-            cmd = 'cp -rf '+exampleProDir + '/src/migrate/* ' + ' ' + projectSrcDir + '/migrate';
-            exec(cmd);
+            // cmd = 'cp -rf '+exampleProDir + '/src/migrate/* ' + ' ' + projectSrcDir + '/migrate';
+            // exec(cmd);
+            exec('cp -rf ' + exampleProDir + '/src/*' + ' ' + projectSrcDir);
+
             exec('cp ' + exampleProDir + '/index.js' + ' ' + projectDir + '/');
             exec('cp ' + exampleProDir + '/package.json' + ' ' + projectDir + '/');
+            exec('cp ' + exampleProDir + '/routes.js' + ' ' + projectDir + '/');
             exec('cp ' + exampleProDir + '/config/config.json' + ' ' + projectDir + '/config/');
+            exec('cp ' + exampleProDir + '/config/routes.json' + ' ' + projectDir + '/config/');
 
             console.log('All files migrated to Unified Stack files.');
         } else {

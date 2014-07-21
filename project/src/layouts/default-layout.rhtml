@@ -1,0 +1,49 @@
+<!-- Configure the global header and global footer: -->
+<gh-configure layout="FULL"/>
+
+<!-- You muse use the <optimizer-page> tag for required JavaScript
+     code to be included: -->
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+
+    <layout-placeholder name="meta"/>
+
+    <title><layout-placeholder name="title"/></title>
+        <!-- You muse use the <gh-head-css> tag for required CSS
+         code to be included: -->
+    <gh-head-css/>
+    <optimizer-head/>
+    <site-speed-top/>
+</head>
+<body>
+    <tracking-helper var="tracking" />
+    <tracking-cookies/>
+    <tracking-images/>
+    <!-- Insert the global footer -->
+    <gh-header/>
+
+
+    <layout-placeholder name="body"/>
+
+
+
+    <div style="clear: both"/>
+
+    <!-- Insert the global footer -->
+    <gh-footer/>
+
+    <optimizer-body/>
+
+
+    <!-- You muse use the <gh-body-js> tag for required JavaScript
+         code to be included: -->
+    <gh-body-js/>
+
+    <site-speed-bottom/>
+</body>
+</html>

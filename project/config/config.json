@@ -269,6 +269,7 @@
         }
     }
     ,"COLLECTION": "www.collect.stratus.ebay.com/collect/collections/v1",
+    "COLLECTION_INTERNAL": "www.collect.stratus.ebay.com/collect/collectionsinternal/v1",
     "COLLECTION_JSONP": "svcs.ebay.com/buying/collections/v1",
     "COLLECTION_WIDGET_JS": "http://ir.ebaystatic.com/z/ml/bakgucg2du5i1jwp0oc5dvy4a.js",
     "PROFILE": "mywrldsvc-web-1.stratus.phx.ebay.com/mywrldsvc/v1",

@@ -165,7 +165,7 @@ module.exports = {
             if(!file) {
                 return false;
             }
-            if( file.indexOf('/src/ebay-api/') === -1 && file/indexOf('/src/services/') === -1 ) {
+            if( file.indexOf('/src/ebay-api/') === -1 && file.indexOf('/src/services/') === -1 ) {
                 return false;
             }
             var r = src && src.indexOf("JSON.parse") > -1;

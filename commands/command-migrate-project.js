@@ -158,9 +158,19 @@ module.exports = {
             exec('uninode-dev migrate render ' + projectSrcDir);
             exec('uninode-dev migrate uniapi ' + projectSrcDir);
 
-            // cmd = 'cp -rf '+exampleProDir + '/src/migrate/* ' + ' ' + projectSrcDir + '/migrate';
-            // exec(cmd);
-            exec('cp -rf ' + exampleProDir + '/src/*' + ' ' + projectSrcDir);
+            exec('mkdir -p ' +  projectSrcDir + '/migrate');
+            cmd = 'cp -rf '+exampleProDir + '/src/migrate/* ' + ' ' + projectSrcDir + '/migrate';
+            exec(cmd);
+
+            exec('mkdir -p ' +  projectSrcDir + '/pages/raptor');
+            cmd = 'cp -rf '+exampleProDir + '/src/pages/raptor/* ' + ' ' + projectSrcDir + '/pages/raptor';
+            exec(cmd);
+
+            exec('mkdir -p ' +  projectSrcDir + '/layouts');
+            cmd = 'cp -rf '+exampleProDir + '/src/layouts/* ' + ' ' + projectSrcDir + '/layouts';
+            exec(cmd);
+
+            // exec('cp -rf ' + exampleProDir + '/src/*' + ' ' + projectSrcDir);
 
             exec('cp ' + exampleProDir + '/index.js' + ' ' + projectDir + '/');
             exec('cp ' + exampleProDir + '/package.json' + ' ' + projectDir + '/');

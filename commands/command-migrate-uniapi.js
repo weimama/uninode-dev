@@ -220,6 +220,8 @@ module.exports = {
             r = r || src.indexOf("ebayRequestContext.logger(") > -1;
             r = r || src.indexOf(".debugEvent(") > -1;
             r = r || src.indexOf(".errorEvent(") > -1;
+            r = r || src.indexOf(".begin(") > -1;
+            
             if(r) {
                 moduleOptions.moduleNames['ebay-logger'] = true;
             }

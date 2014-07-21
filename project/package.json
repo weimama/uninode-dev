@@ -12,6 +12,7 @@
   "license": "PRIVATE",
   "dependencies": {
        "appmeta-ebay": "^0.1.5",
+        "app-module-path": "^0.3.2-beta",
         "browser-refresh-taglib": "^0.1.0-beta",
         "cal": "^0.5.4",
         "commons-ebay": "^0.1.7",

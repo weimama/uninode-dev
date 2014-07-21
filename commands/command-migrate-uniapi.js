@@ -165,7 +165,7 @@ module.exports = {
             if(!file) {
                 return false;
             }
-            if(file.indexOf('/src/ebay-api/') === -1) {
+            if( file.indexOf('/src/ebay-api/') === -1 && file/indexOf('/src/services/') === -1 ) {
                 return false;
             }
             var r = src && src.indexOf("JSON.parse") > -1;
@@ -194,6 +194,7 @@ module.exports = {
                 return false;
             }
             var r = src.indexOf("require('ebay-guid').getGuid") > -1;
+            r =  r || src.indexOf("require('ebay-guid')") > -1;
             if (r) {
                 moduleOptions.moduleNames['ebay-guid'] = true;
             }
@@ -229,6 +230,18 @@ module.exports = {
             return r;
         }
 
+        function hasEbayAuth(src, file) {
+            if(!file || !src) {
+                return false;
+            }
+            var r = src.indexOf("require('ebay-auth')") > -1;
+            if (r) {
+                moduleOptions.moduleNames['ebay-auth'] = true;
+            }
+
+            return r;
+        }
+
 
         function isMigrateFolder(src, file) {
             if(file && file.indexOf('/migrate/') > -1) {
@@ -256,6 +269,8 @@ module.exports = {
             checkFuncs.push(hasEbayGuid);
             checkFuncs.push(hasEbayDeviceDetection);
             checkFuncs.push(hasEbayLogger);
+            checkFuncs.push(hasEbayAuth);
+
 
 
 

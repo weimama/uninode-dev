@@ -5,7 +5,7 @@ require('continuation-local-storage');
 var express = require('express');
 var kraken = require('kraken-js');
 
-require('app-module-path').addPath(__dirname);
+
 
 var options = {
     onconfig: function (config, cb) {
@@ -27,6 +27,8 @@ var options = {
 
 var app = express();
 app.use(kraken(options));
+
+require('app-module-path').addPath(__dirname);
 
 app.once('start', function() {
     console.log('Server ready');

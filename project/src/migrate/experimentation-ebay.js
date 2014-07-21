@@ -6,7 +6,7 @@ module.exports.middleware = ebayEp.middleware;
 module.exports.middleware.getQualifiedTreatments = function(options) {
     return function(req, res, next) {
         options = options || {};
-        ebayEp..addParams(options);
+        ebayEp.addParams(options);
         next();
     }
 };

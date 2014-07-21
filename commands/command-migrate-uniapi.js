@@ -212,6 +212,20 @@ module.exports = {
             return r;
         }
 
+        function hasEbayLogger(src, file) {
+            if(!file || !src) {
+                return false;
+            }
+            var r = src.indexOf("ebay.logger(") > -1;
+            r = r || src.indexOf("ebayRequestContext.logger(") > -1;
+            r = r || src.indexOf(".debugEvent(") > -1;
+            r = r || src.indexOf(".errorEvent(") > -1;
+            if(r) {
+                moduleOptions.moduleNames['ebay-logger'] = true;
+            }
+            return r;
+        }
+
 
         function isMigrateFolder(src, file) {
             if(file && file.indexOf('/migrate/') > -1) {
@@ -238,6 +252,8 @@ module.exports = {
             checkFuncs.push(hasEbayApiFolder);
             checkFuncs.push(hasEbayGuid);
             checkFuncs.push(hasEbayDeviceDetection);
+            checkFuncs.push(hasEbayLogger);
+
 
 
             var checkResults = _.map(checkFuncs, function(check) {

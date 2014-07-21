@@ -221,7 +221,8 @@ module.exports = {
             r = r || src.indexOf(".debugEvent(") > -1;
             r = r || src.indexOf(".errorEvent(") > -1;
             r = r || src.indexOf(".begin(") > -1;
-            
+            r = r || src.indexOf("logger.end(") > -1;
+
             if(r) {
                 moduleOptions.moduleNames['ebay-logger'] = true;
             }

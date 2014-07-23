@@ -38,12 +38,32 @@ module.exports = {
             return stat.isDirectory();
         });
 
+        var projectRootDir = args['projectdir'];
+        if(!projectRootDir) {
+            var root = files[0];
+            // console.log('root:', root);
+            if( fs.existsSync(require('path').resolve(root,'./config')) ) {
+                projectRootDir = root;
+            } else if(fs.existsSync( require('path').resolve(root,'../config') ) ) {
+                projectRootDir = require('path').resolve(root, '../');
+            } else {
+                if(root.indexOf('src') > 0) {
+                    projectRootDir = require('path').resolve(root, '../');
+                    // console.log('p r d:', projectRootDir);
+                } else {
+                    projectRootDir = root;
+                    // console.log('p r d 2:', projectRootDir);
+                }
+            }
+        }
+        // console.log('---project root dir:', projectRootDir);
+
 
         return {
             searchPath: searchPath,
             files: files,
             skipTransformRequire: args['skip-transform-require'],
-            projectDir: args['projectdir']
+            projectDir: projectRootDir
         };
     },
 
@@ -52,6 +72,7 @@ module.exports = {
         var fileCount = 0;
         var moduleOptions = {};
         moduleOptions.moduleNames = {};
+
         moduleOptions.projectDir = args.projectDir;
 
         function hasModuleConfig(src, file) {
@@ -326,7 +347,7 @@ module.exports = {
 
             if(pos !== -1) {
                 var projectSrcDir = file.substring(0, pos+1);
-                moduleOptions.projectSrcDir = projectSrcDir;                
+                moduleOptions.projectSrcDir = projectSrcDir;
                 moduleOptions.srcRelative = '';
                 var pathArrFile = file.split('/');
                 var pathArrSrcDir = projectSrcDir.split('/');

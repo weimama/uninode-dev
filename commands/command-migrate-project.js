@@ -159,9 +159,15 @@ module.exports = {
 
             //move to here, because uni-api will add i18n preload in config.json
 
+            exec('mkdir -p ' + projectDir + '/config/');
             exec('cp ' + exampleProDir + '/config/config.json' + ' ' + projectDir + '/config/');
+            // exec('ls ' + projectDir + '/config/');
+            // return;
 
-            exec('uninode-dev migrate uniapi ' + projectSrcDir + ' --projectdir ' +  file);
+
+
+            // exec('uninode-dev migrate uniapi ' + projectSrcDir + ' --projectdir ' +  file);
+            exec('uninode-dev migrate uniapi ' + projectSrcDir);
 
             exec('mkdir -p ' +  projectSrcDir + '/migrate');
             cmd = 'cp -rf '+exampleProDir + '/src/migrate/* ' + ' ' + projectSrcDir + '/migrate';

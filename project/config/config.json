@@ -106,7 +106,8 @@
 
     "raptor-optimizer": {
         "plugins": {
-            "optimizer-plugin-inc": {}
+            "optimizer-plugin-inc": {},
+             "i18n-ebay/optimizer": {}
         },
         "fileWriter": {
             "url-prefix": "/static",

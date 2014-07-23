@@ -34,6 +34,7 @@
     "raptor-util": "^0.2.2-beta",
     "raptor-xml": "^0.2.2-beta",
     "shelljs": "^0.3.0",
+    "shush": "0.0.1",
     "underscore": "^1.6.0"
   },
   "bin": {

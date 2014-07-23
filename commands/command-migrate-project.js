@@ -156,7 +156,12 @@ module.exports = {
 
             exec('uninode-dev migrate cleanmiddleware ' + projectSrcDir);
             exec('uninode-dev migrate render ' + projectSrcDir);
-            exec('uninode-dev migrate uniapi ' + projectSrcDir);
+
+            //move to here, because uni-api will add i18n preload in config.json
+
+            exec('cp ' + exampleProDir + '/config/config.json' + ' ' + projectDir + '/config/');
+
+            exec('uninode-dev migrate uniapi ' + projectSrcDir + ' --projectdir ' +  file);
 
             exec('mkdir -p ' +  projectSrcDir + '/migrate');
             cmd = 'cp -rf '+exampleProDir + '/src/migrate/* ' + ' ' + projectSrcDir + '/migrate';
@@ -175,7 +180,7 @@ module.exports = {
             exec('cp ' + exampleProDir + '/index.js' + ' ' + projectDir + '/');
             exec('cp ' + exampleProDir + '/package.json' + ' ' + projectDir + '/');
             exec('cp ' + exampleProDir + '/routes.js' + ' ' + projectDir + '/');
-            exec('cp ' + exampleProDir + '/config/config.json' + ' ' + projectDir + '/config/');
+
             exec('cp ' + exampleProDir + '/config/routes.json' + ' ' + projectDir + '/config/');
 
             console.log('All files migrated to Unified Stack files.');

@@ -16,6 +16,10 @@ module.exports = {
             type: 'boolean',
             default: false
         },
+        projectdir: {
+            description: 'Project directory',
+            type: 'string'
+        },
 
         file: {
             description: 'Only transform a single file',
@@ -38,7 +42,8 @@ module.exports = {
         return {
             searchPath: searchPath,
             files: files,
-            skipTransformRequire: args['skip-transform-require']
+            skipTransformRequire: args['skip-transform-require'],
+            projectDir: args['projectdir']
         };
     },
 
@@ -47,6 +52,7 @@ module.exports = {
         var fileCount = 0;
         var moduleOptions = {};
         moduleOptions.moduleNames = {};
+        moduleOptions.projectDir = args.projectDir;
 
         function hasModuleConfig(src, file) {
             var r = src && src.indexOf("require('module-config')") > -1;
@@ -115,6 +121,7 @@ module.exports = {
         function hasEbayI18n(src, file) {
             var r = src && src.indexOf("require('ebay-i18n')") > -1;
             r = r || src && src.indexOf(".getContentManager(") > -1;
+            r = r || src && src.indexOf(".getBundle(") > -1;
             if (r) {
                 moduleOptions.moduleNames['ebay-i18n'] = true;
             }
@@ -319,7 +326,7 @@ module.exports = {
 
             if(pos !== -1) {
                 var projectSrcDir = file.substring(0, pos+1);
-                moduleOptions.projectSrcDir = projectSrcDir;
+                moduleOptions.projectSrcDir = projectSrcDir;                
                 moduleOptions.srcRelative = '';
                 var pathArrFile = file.split('/');
                 var pathArrSrcDir = projectSrcDir.split('/');

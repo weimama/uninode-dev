@@ -2,6 +2,10 @@
     "name": "uninode-dev",
     "description": "Commands for migrating to RaptorJS 3",
     "commands": {
+        "migrate metadata": {
+            "description": "Migrate Xml metadata to Json format",
+            "file": "commands/command-migrate-metadata.js"
+        },
         "migrate templatepatch": {
             "description": "Migrate template file with patching gh and tracking",
             "file": "commands/command-migrate-templatepatch.js"

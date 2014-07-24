@@ -1,0 +1,109 @@
+{
+    "application": {
+        "type": "Web",
+        "description": "Your application description here!!!",
+        "lifecycleState": "Deployed",
+        "urlStrategy": "",
+        "page-Map": {
+            "page": [
+                {
+                    "name": "DefaultPage",
+                    "description": "This default page that will be inserted for every application. The page id of the default page will be used\r\n\t      for every page that is not registered with AR during development",
+                    "lifecycleState": "Deployed",
+                    "isAjax": "false",
+                    "isDefault": "true",
+                    "security": {
+                        "authentication": "NONE_REQUIRED",
+                        "authorization": "true",
+                        "roleId": "true"
+                    }
+                },
+                {
+                    "name": "Collection",
+                    "description": "An individual collection page",
+                    "lifecycleState": "Deployed",
+                    "isAjax": "false",
+                    "isDefault": "false",
+                    "security": {
+                        "authentication": "NONE_REQUIRED",
+                        "authorization": "true",
+                        "roleId": "true"
+                    }
+                },
+                {
+                    "name": "Collection_Spoke",
+                    "description": "A page that shows all of a user's collections",
+                    "lifecycleState": "Deployed",
+                    "isAjax": "false",
+                    "isDefault": "false",
+                    "security": {
+                        "authentication": "NONE_REQUIRED",
+                        "authorization": "true",
+                        "roleId": "true"
+                    }
+                },
+                {
+                    "name": "Collection_Ajax",
+                    "description": "Ajax action that shows next page of items in a collection",
+                    "lifecycleState": "Deployed",
+                    "isAjax": "true",
+                    "isDefault": "false",
+                    "security": {
+                        "authentication": "NONE_REQUIRED",
+                        "authorization": "true",
+                        "roleId": "true"
+                    }
+                },
+                {
+                    "name": "Collection_Explorer",
+                    "description": "Collection explorer page",
+                    "lifecycleState": "Deployed",
+                    "isAjax": "false",
+                    "isDefault": "false",
+                    "security": {
+                        "authentication": "NONE_REQUIRED",
+                        "authorization": "true",
+                        "roleId": "true"
+                    }
+                },
+                {
+                    "name": "Collection_Explorer_Ajax",
+                    "description": "Ajax action that happens on collection explorer page",
+                    "lifecycleState": "Deployed",
+                    "isAjax": "true",
+                    "isDefault": "false",
+                    "security": {
+                        "authentication": "NONE_REQUIRED",
+                        "authorization": "true",
+                        "roleId": "true"
+                    }
+                },
+                {
+                    "name": "Collection_Gifting",
+                    "description": "Holiday Curated Gifting Collections",
+                    "lifecycleState": "Deployed",
+                    "isAjax": "false",
+                    "isDefault": "false",
+                    "security": {
+                        "authentication": "NONE_REQUIRED",
+                        "authorization": "true",
+                        "roleId": "true"
+                    }
+                },
+                {
+                    "name": "My_Collections",
+                    "description": "L1AUTH landing page to go to collection spoke page",
+                    "lifecycleState": "Deployed",
+                    "isAjax": "false",
+                    "isDefault": "false",
+                    "security": {
+                        "authentication": "L1AUTH",
+                        "authorization": "true",
+                        "roleId": "true"
+                    }
+                }
+            ]
+        },
+        "secureService": "true"
+    }
+}

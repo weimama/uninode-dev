@@ -15,6 +15,7 @@
     "cheerio": "^0.17.0",
     "escodegen": "~1.1.0",
     "escope": "^1.0.1",
+    "esgraph": "^0.1.1",
     "eslevels": "^0.3.2",
     "esprima": "~1.0.4",
     "esrefactor": "^0.1.0",

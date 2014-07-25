@@ -4,10 +4,10 @@ var ebayEp = require('experimentation-ebay');
 module.exports.middleware = ebayEp.middleware;
 
 module.exports.middleware.getQualifiedTreatments = function(options) {
-    options = options || {};
-    ebayEp.addParams(options);
-    
+    options = options || {};    
+
     return function(req, res, next) {
+        ebayEp.addParams(options);
         next();
     }
 };

@@ -152,6 +152,7 @@ module.exports = {
         function hasEbayEp(src, file) {
             var r = src && src.indexOf("require('ebay-ep')") > -1;
             r = r || src && src.indexOf("middleware.getQualifiedTreatments(") > -1;
+            r = r || src && src.indexOf("app.use(") > -1;
             if (r) {
                 moduleOptions.moduleNames['ebay-ep'] = true;
             }

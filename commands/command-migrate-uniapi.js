@@ -77,6 +77,16 @@ module.exports = {
 
         moduleOptions.projectDir = args.projectDir;
 
+        function addMissingDependency(config) {
+            if(!config) {
+                return;
+            }
+            if(!config.dependencies){
+                return;
+            }
+            config.dependencies['dustjs-linkedin'] = '~2.3.5';
+        }
+
         function fixDependencyVersion() {
             var projectDir = moduleOptions.projectDir;
             // var u = require('../lib/uniap/util');
@@ -90,6 +100,9 @@ module.exports = {
             if(!config) {
                 return
             }
+
+            addMissingDependency(config);
+
             if(config.dependencies) {
                 config.dependencies = u.sortObject(config.dependencies);
                 config.dependencies = u.fixDependencyVersion(config.dependencies);
@@ -100,13 +113,15 @@ module.exports = {
             }
 
             var cnt = JSON.stringify(config,null, 4);
-            console.log(cnt);
+            // console.log(cnt);
 
             fs.writeFileSync(packageFile,  cnt, {encoding: 'utf8'});
 
         }
 
         fixDependencyVersion();
+
+
 
         function hasModuleConfig(src, file) {
             var r = src && src.indexOf("require('module-config')") > -1;
@@ -186,6 +201,7 @@ module.exports = {
             var r = src && src.indexOf("require('ebay-ep')") > -1;
             r = r || src && src.indexOf("middleware.getQualifiedTreatments(") > -1;
             r = r || src && src.indexOf("app.use(") > -1;
+            r = r || src && src.indexOf(".getEpContext(") > -1;
             if (r) {
                 moduleOptions.moduleNames['ebay-ep'] = true;
             }

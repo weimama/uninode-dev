@@ -6,6 +6,8 @@ var jsTransformer = require('../lib/uniapi/uniapi-transformer');
 var fs = require('fs');
 var walk = require('../lib/walk');
 var _ = require('underscore');
+var shush = require('shush');
+var u = require('../lib/uniapi/util');
 
 module.exports = {
     usage: 'Usage: $0 $commandName [dir]',
@@ -74,6 +76,37 @@ module.exports = {
         moduleOptions.moduleNames = {};
 
         moduleOptions.projectDir = args.projectDir;
+
+        function fixDependencyVersion() {
+            var projectDir = moduleOptions.projectDir;
+            // var u = require('../lib/uniap/util');
+            var packageFile = require('path').resolve(projectDir, 'package.json');
+            // console.log('packageFile:', packageFile);
+            if(!fs.existsSync(packageFile)) {
+                // console.log('---NOT EXIST:', packageFile);
+                return;
+            }
+            var config = shush(packageFile);
+            if(!config) {
+                return
+            }
+            if(config.dependencies) {
+                config.dependencies = u.sortObject(config.dependencies);
+                config.dependencies = u.fixDependencyVersion(config.dependencies);
+            }
+            if(config.devDependencies) {
+                config.devDependencies = u.sortObject(config.devDependencies);
+                config.devDependencies = u.fixDependencyVersion(config.devDependencies);
+            }
+
+            var cnt = JSON.stringify(config,null, 4);
+            console.log(cnt);
+
+            fs.writeFileSync(packageFile,  cnt, {encoding: 'utf8'});
+
+        }
+
+        fixDependencyVersion();
 
         function hasModuleConfig(src, file) {
             var r = src && src.indexOf("require('module-config')") > -1;

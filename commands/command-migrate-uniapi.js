@@ -202,6 +202,7 @@ module.exports = {
             r = r || src && src.indexOf("middleware.getQualifiedTreatments(") > -1;
             r = r || src && src.indexOf("app.use(") > -1;
             r = r || src && src.indexOf(".getEpContext(") > -1;
+            r = r || src && src.indexOf(".hasFactor(") > -1;
             if (r) {
                 moduleOptions.moduleNames['ebay-ep'] = true;
             }

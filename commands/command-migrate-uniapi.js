@@ -77,6 +77,26 @@ module.exports = {
 
         moduleOptions.projectDir = args.projectDir;
 
+        function fixToursLib() {
+            var projectDir = moduleOptions.projectDir;
+            var file = nodePath.resolve(projectDir, './src/pages/collection/collection.js');
+            if(!fs.existsSync(file)) {
+                return;
+            }
+            var src = fs.readFileSync(file, {
+                encoding: 'utf8'
+            });
+
+            src = src.replace("require('ete/tours/Manager')", "{load: function(){}, start: function(){}}");
+
+            fs.writeFileSync(file, src, {
+                encoding: 'utf8'
+            });
+
+        }
+
+        fixToursLib();
+
         function fixPencilInCss() {
             var source = require('path').resolve(__dirname, '../project/src/pencil.png');
             var target = nodePath.resolve(moduleOptions.projectDir, './src/components/app-collection-gallery/pencil.png');
@@ -352,6 +372,7 @@ module.exports = {
 
             return r;
         }
+
 
 
         function isMigrateFolder(src, file) {

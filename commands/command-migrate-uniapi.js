@@ -77,6 +77,67 @@ module.exports = {
 
         moduleOptions.projectDir = args.projectDir;
 
+        function fixLoggerInCollectionsApi() {
+            var projectDir = moduleOptions.projectDir;
+            var file = nodePath.resolve(projectDir, './src/pages/collections/collectionsAPI.js');
+            console.log(file);
+            if(!fs.existsSync(file)) {
+                return;
+            }
+            var src = fs.readFileSync(file, {
+                encoding: 'utf8'
+            });
+
+            src = src.replace("var logger = args.pageLogger.begin('collectionsAPI', 'getCollectionsPromise');", "var logger = args && args.pageLogger || require('logging-inc').logger('getCollectionsPromise');");
+            console.log(src);
+
+            fs.writeFileSync(file, src, {
+                encoding: 'utf8'
+            });
+
+        }
+        fixLoggerInCollectionsApi();
+
+        function fixLoggerInGifting() {
+            var projectDir = moduleOptions.projectDir;
+            var file = nodePath.resolve(projectDir, './src/components/app-gifting-gallery/gifting-gallery-widget.js');
+            if(!fs.existsSync(file)) {
+                return;
+            }
+            var src = fs.readFileSync(file, {
+                encoding: 'utf8'
+            });
+
+            src = src.replace("var logger = require('raptor-logging').logger(module);", " ");
+
+            fs.writeFileSync(file, src, {
+                encoding: 'utf8'
+            });
+        }
+
+        fixLoggerInGifting();
+
+        function fixCsrfComments() {
+            var projectDir = moduleOptions.projectDir;
+            var file = nodePath.resolve(projectDir, './src/components/app-collection-gallery/template.rhtml');
+            if(!fs.existsSync(file)) {
+                return;
+            }
+            var src = fs.readFileSync(file, {
+                encoding: 'utf8'
+            });
+
+            src = src.replace("csrfTokenRaptor: '${csrf.generateToken('collectajax')}'", " ");
+
+            fs.writeFileSync(file, src, {
+                encoding: 'utf8'
+            });
+
+        }
+
+        fixCsrfComments();
+
+
         function fixToursLib() {
             var projectDir = moduleOptions.projectDir;
             var file = nodePath.resolve(projectDir, './src/pages/collection/collection.js');
@@ -87,7 +148,9 @@ module.exports = {
                 encoding: 'utf8'
             });
 
-            src = src.replace("require('ete/tours/Manager')", "{load: function(){}, start: function(){}}");
+            while( src.indexOf("require('ete/tours/Manager')") > -1) {
+                src = src.replace("require('ete/tours/Manager')", "{load: function(){}, start: function(){}}");
+            }
 
             fs.writeFileSync(file, src, {
                 encoding: 'utf8'

@@ -61,6 +61,10 @@ module.exports = {
             if(src.indexOf('.middleware.getQualifiedTreatments') !== -1) {
                 return true;
             }
+            if(src.indexOf('.deviceDetection())') !== -1) {
+                return true;
+            }
+
             return false;
         }
 

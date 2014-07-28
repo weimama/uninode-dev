@@ -77,6 +77,25 @@ module.exports = {
 
         moduleOptions.projectDir = args.projectDir;
 
+        function fixRoutes() {
+            var projectDir = moduleOptions.projectDir;
+            var routesFile = require('path').resolve(projectDir, 'routes.js');
+            if(!fs.existsSync(routesFile)) {
+                return;
+            }
+            var src = fs.readFileSync(routesFile, {
+                encoding: 'utf8'
+            });
+
+            src = src.replace("app.get('/cln/:username', require('src/pages/collections'));", "app.get('/cln/:username', require('src/middleware').deviceDetection(), require('src/pages/collections'));");
+
+            fs.writeFileSync(routesFile, src, {
+                encoding: 'utf8'
+            });
+        }
+
+        fixRoutes();
+
         function addMissingDependency(config) {
             if(!config) {
                 return;

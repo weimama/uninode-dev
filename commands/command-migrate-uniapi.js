@@ -77,6 +77,17 @@ module.exports = {
 
         moduleOptions.projectDir = args.projectDir;
 
+        function fixPencilInCss() {
+            var source = require('path').resolve(__dirname, '../project/src/pencil.png');
+            var target = nodePath.resolve(moduleOptions.projectDir, './src/components/app-collection-gallery/pencil.png');
+            if(!fs.existsSync(target)) {
+                fs.createReadStream(source).pipe(fs.createWriteStream(target));
+            }
+        }
+
+        fixPencilInCss();
+
+
         function fixRoutes() {
             var projectDir = moduleOptions.projectDir;
             var routesFile = require('path').resolve(projectDir, 'routes.js');
@@ -104,6 +115,7 @@ module.exports = {
                 return;
             }
             config.dependencies['dustjs-linkedin'] = '~2.3.5';
+            config.dependencies['experimentation-ebay'] = '~0.1.3';
         }
 
         function fixDependencyVersion() {

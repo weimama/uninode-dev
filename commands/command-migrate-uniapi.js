@@ -80,7 +80,7 @@ module.exports = {
         function fixLoggerInCollectionsApi() {
             var projectDir = moduleOptions.projectDir;
             var file = nodePath.resolve(projectDir, './src/pages/collections/collectionsAPI.js');
-            console.log(file);
+            // console.log(file);
             if(!fs.existsSync(file)) {
                 return;
             }
@@ -89,7 +89,7 @@ module.exports = {
             });
 
             src = src.replace("var logger = args.pageLogger.begin('collectionsAPI', 'getCollectionsPromise');", "var logger = args && args.pageLogger || require('logging-inc').logger('getCollectionsPromise');");
-            console.log(src);
+            // console.log(src);
 
             fs.writeFileSync(file, src, {
                 encoding: 'utf8'

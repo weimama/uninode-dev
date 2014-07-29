@@ -77,6 +77,43 @@ module.exports = {
 
         moduleOptions.projectDir = args.projectDir;
 
+        function fixPrivacySettings() {
+            var projectDir = moduleOptions.projectDir;
+            //process widget.js
+            var file = nodePath.resolve(projectDir, './src/pages/collections/widget.js');
+            // console.log(file);
+            if(!fs.existsSync(file)) {
+                return;
+            }
+            var src = fs.readFileSync(file, {
+                encoding: 'utf8'
+            });
+
+            src = src.replace("component/following/privacy_settings","../../components/app-privacy-settings/privacy-settings.js");
+
+            fs.writeFileSync(file, src, {
+                encoding: 'utf8'
+            });
+
+            //process privacy-settings.js
+
+            file = nodePath.resolve(projectDir, './src/components/app-privacy-settings/privacy-settings.js');
+            // console.log(file);
+            if(!fs.existsSync(file)) {
+                return;
+            }
+            src = fs.readFileSync(file, {
+                encoding: 'utf8'
+            });
+
+            src = src.replace("require('component/following/privacy_settings')","module.exports");
+
+            fs.writeFileSync(file, src, {
+                encoding: 'utf8'
+            });
+        }
+        fixPrivacySettings();
+
         function fixLoggerInCollectionsApi() {
             var projectDir = moduleOptions.projectDir;
             var file = nodePath.resolve(projectDir, './src/pages/collections/collectionsAPI.js');
@@ -94,7 +131,6 @@ module.exports = {
             fs.writeFileSync(file, src, {
                 encoding: 'utf8'
             });
-
         }
         fixLoggerInCollectionsApi();
 
@@ -199,6 +235,7 @@ module.exports = {
             }
             config.dependencies['dustjs-linkedin'] = '~2.3.5';
             config.dependencies['experimentation-ebay'] = '~0.1.3';
+            config.dependencies['continuation-local-storage'] = '~3.0.0';
         }
 
         function fixDependencyVersion() {

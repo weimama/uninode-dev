@@ -226,6 +226,10 @@ module.exports = {
 
         fixRoutes();
 
+        function fixEbayGpaas(config) {
+            config.gpaas = config.ebay;
+        }
+
         function addMissingDependency(config) {
             if(!config) {
                 return;
@@ -236,6 +240,9 @@ module.exports = {
             config.dependencies['dustjs-linkedin'] = '~2.3.5';
             config.dependencies['experimentation-ebay'] = '~0.1.3';
             config.dependencies['continuation-local-storage'] = '~3.0.0';
+
+            fixEbayGpaas(config);
+
         }
 
         function fixDependencyVersion() {
@@ -270,7 +277,10 @@ module.exports = {
 
         }
 
+
         fixDependencyVersion();
+
+
 
 
 

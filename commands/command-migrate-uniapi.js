@@ -218,6 +218,7 @@ module.exports = {
             });
 
             src = src.replace("app.get('/cln/:username', require('src/pages/collections'));", "app.get('/cln/:username', require('src/middleware').deviceDetection(), require('src/pages/collections'));");
+            src = src.replace(/require\('src\/pages\/my-collections'\)/g, "require('auth-ebay').middleware.auth({ pageName: 'My_Collections', sessionPolicy: 'L1AUTH', enforcement: 'AUTH' }), require('src/pages/my-collections')" );
 
             fs.writeFileSync(routesFile, src, {
                 encoding: 'utf8'

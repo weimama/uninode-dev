@@ -227,6 +227,12 @@ module.exports = {
 
         fixRoutes();
 
+        function fixNpmStart(config) {
+            if(config && config.scripts && config.scripts.start) {
+                config.scripts.start = "node index.js";
+            }
+        }
+
         function fixEbayGpaas(config) {
             config.gpaas = config.ebay;
         }
@@ -261,6 +267,8 @@ module.exports = {
             }
 
             addMissingDependency(config);
+            
+            fixNpmStart(config);
 
             if(config.dependencies) {
                 config.dependencies = u.sortObject(config.dependencies);

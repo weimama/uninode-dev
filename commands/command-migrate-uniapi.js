@@ -86,10 +86,10 @@ module.exports = {
                 if (!files.hasOwnProperty(i)) continue;
                 var name = dir+'/'+files[i];
                 if (fs.statSync(name).isDirectory()){
-                    getFiles(name,files_);
+                    getRhtmlFiles(name,files_);
                 } else {
 
-                    if( name.indexOf(suffix, this.length-suffix.length) !== -1 ) {
+                    if(name && name.indexOf(suffix, name.length-suffix.length) !== -1 ) {
                         files_.push(name);
                     }
                 }
@@ -101,17 +101,21 @@ module.exports = {
             var projectDir = moduleOptions.projectDir;
             var files = [];
             getRhtmlFiles(projectDir, files);
-            var src = '';
+
             files.forEach(function(file) {
-                src = fs.readFileSyc(file, {
+                var src = fs.readFileSync(file, {
                     encoding: 'utf8'
                 });
+                
+                if(src && src.indexOf("flw-widget") !== -1) {
+                    src = src.replace(/flw\-widget/g, "follow-widget");
 
-                src = src.replace(/flw\-widget/g, "follow-widget");
+                    fs.writeFileSync(file, src, {
+                        encoding: 'utf8'
+                    });
+                }
 
-                fs.writeFileSync(file, src, {
-                    encoding: 'utf8'
-                });
+
             });
 
         }

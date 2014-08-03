@@ -77,6 +77,48 @@ module.exports = {
 
         moduleOptions.projectDir = args.projectDir;
 
+        function getRhtmlFiles(dir,files_){
+            files_ = files_ || [];
+            if (typeof files_ === 'undefined') files_=[];
+            var files = fs.readdirSync(dir);
+            var suffix = '.rhtml';
+            for(var i in files){
+                if (!files.hasOwnProperty(i)) continue;
+                var name = dir+'/'+files[i];
+                if (fs.statSync(name).isDirectory()){
+                    getFiles(name,files_);
+                } else {
+
+                    if( name.indexOf(suffix, this.length-suffix.length) !== -1 ) {
+                        files_.push(name);
+                    }
+                }
+            }
+            return files_;
+        }
+
+        function fixFollowWidgets() {
+            var projectDir = moduleOptions.projectDir;
+            var files = [];
+            getRhtmlFiles(projectDir, files);
+            var src = '';
+            files.forEach(function(file) {
+                src = fs.readFileSyc(file, {
+                    encoding: 'utf8'
+                });
+
+                src = src.replace(/flw\-widget/g, "follow-widget");
+
+                fs.writeFileSync(file, src, {
+                    encoding: 'utf8'
+                });
+            });
+
+        }
+
+        fixFollowWidgets();
+
+
         function fixPrivacySettings() {
             var projectDir = moduleOptions.projectDir;
             //process widget.js
@@ -267,7 +309,7 @@ module.exports = {
             }
 
             addMissingDependency(config);
-            
+
             fixNpmStart(config);
 
             if(config.dependencies) {

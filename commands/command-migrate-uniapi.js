@@ -106,7 +106,7 @@ module.exports = {
                 var src = fs.readFileSync(file, {
                     encoding: 'utf8'
                 });
-                
+
                 if(src && src.indexOf("flw-widget") !== -1) {
                     src = src.replace(/flw\-widget/g, "follow-widget");
 
@@ -291,7 +291,7 @@ module.exports = {
                 return;
             }
             config.dependencies['dustjs-linkedin'] = '~2.3.5';
-            config.dependencies['experimentation-ebay'] = '~0.1.3';
+            config.dependencies['experimentation-ebay'] = '~0';
             config.dependencies['continuation-local-storage'] = '~3.0.0';
 
             fixEbayGpaas(config);

@@ -97,6 +97,29 @@ module.exports = {
             return files_;
         }
 
+        function fixSocialWidgets() {
+            var projectDir = moduleOptions.projectDir;
+            var file = nodePath.resolve(projectDir, './src/components/app-collection-header/template.rhtml');
+            // console.log(file);
+            if(!fs.existsSync(file)) {
+                return;
+            }
+
+            var src = fs.readFileSync(file, {
+                encoding: 'utf8'
+            });
+
+            if(src && src.indexOf("eb-share") !== -1) {
+                src = src.replace(/eb\-share/g, "eb:share");
+
+                fs.writeFileSync(file, src, {
+                    encoding: 'utf8'
+                });
+            }
+        }
+
+        fixSocialWidgets();
+
         function fixFollowWidgets() {
             var projectDir = moduleOptions.projectDir;
             var files = [];

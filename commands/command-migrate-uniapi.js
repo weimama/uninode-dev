@@ -8,6 +8,7 @@ var walk = require('../lib/walk');
 var _ = require('underscore');
 var shush = require('shush');
 var u = require('../lib/uniapi/util');
+var htmlBeautify = require('js-beautify').html;
 
 module.exports = {
     usage: 'Usage: $0 $commandName [dir]',
@@ -77,6 +78,57 @@ module.exports = {
 
         moduleOptions.projectDir = args.projectDir;
 
+        function getRhtmlFiles(dir,files_){
+            files_ = files_ || [];
+            if (typeof files_ === 'undefined') files_=[];
+            var files = fs.readdirSync(dir);
+            var suffix = '.rhtml';
+            for(var i in files){
+                if (!files.hasOwnProperty(i)) continue;
+                var name = dir+'/'+files[i];
+                if (fs.statSync(name).isDirectory()){
+                    getRhtmlFiles(name,files_);
+                } else {
+
+                    if(name && name.indexOf(suffix, name.length-suffix.length) !== -1 ) {
+                        files_.push(name);
+                    }
+                }
+            }
+            return files_;
+        }
+
+
+        function fixGhBodyJs() {
+            var projectDir = moduleOptions.projectDir;
+            var files = [];
+            getRhtmlFiles(projectDir, files);
+
+            files.forEach(function(file) {
+                
+                var src = fs.readFileSync(file, {
+                    encoding: 'utf8'
+                });
+
+                if(src.indexOf('</body>') !== -1) {
+                    if(src.indexOf('<gh-body-js\/>') === -1) {
+                        src = src.replace(/<body([\s\S]*?)<\/body>/mi, '<body$1 <gh-body-js\/> <\/body>');
+                        src = htmlBeautify(src, {
+                            wrap_line_length: 0,
+                            preserve_newlines: true
+                        });
+                        fs.writeFileSync(file, src, {
+                            encoding: 'utf8'
+                        });
+                    }
+                }
+
+            });
+
+        }
+
+        fixGhBodyJs();
+
         function fixStagingConfig() {
             var projectDir = moduleOptions.projectDir;
             var file = nodePath.resolve(projectDir, './config/staging.json');
@@ -99,25 +151,7 @@ module.exports = {
         }
         fixStagingConfig();
 
-        function getRhtmlFiles(dir,files_){
-            files_ = files_ || [];
-            if (typeof files_ === 'undefined') files_=[];
-            var files = fs.readdirSync(dir);
-            var suffix = '.rhtml';
-            for(var i in files){
-                if (!files.hasOwnProperty(i)) continue;
-                var name = dir+'/'+files[i];
-                if (fs.statSync(name).isDirectory()){
-                    getRhtmlFiles(name,files_);
-                } else {
 
-                    if(name && name.indexOf(suffix, name.length-suffix.length) !== -1 ) {
-                        files_.push(name);
-                    }
-                }
-            }
-            return files_;
-        }
 
         function fixSocialWidgets() {
             var projectDir = moduleOptions.projectDir;

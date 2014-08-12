@@ -77,6 +77,28 @@ module.exports = {
 
         moduleOptions.projectDir = args.projectDir;
 
+        function fixStagingConfig() {
+            var projectDir = moduleOptions.projectDir;
+            var file = nodePath.resolve(projectDir, './config/staging.json');
+            // console.log(file);
+            if(!fs.existsSync(file)) {
+                return;
+            }
+
+            var src = fs.readFileSync(file, {
+                encoding: 'utf8'
+            });
+
+            if(src && src.indexOf("stratus/") !== -1) {
+                src = src.replace(/stratus\//g, "stratus.qa.ebay.com/");
+
+                fs.writeFileSync(file, src, {
+                    encoding: 'utf8'
+                });
+            }
+        }
+        fixStagingConfig();
+
         function getRhtmlFiles(dir,files_){
             files_ = files_ || [];
             if (typeof files_ === 'undefined') files_=[];

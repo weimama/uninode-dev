@@ -105,7 +105,7 @@ module.exports = {
             getRhtmlFiles(projectDir, files);
 
             files.forEach(function(file) {
-                
+
                 var src = fs.readFileSync(file, {
                     encoding: 'utf8'
                 });
@@ -370,8 +370,8 @@ module.exports = {
                 return;
             }
             config.dependencies['dustjs-linkedin'] = '~2.3.5';
-            config.dependencies['experimentation-ebay'] = '~0';
-            config.dependencies['continuation-local-storage'] = '~3.0.0';
+            //config.dependencies['experimentation-ebay'] = '~0';
+            //config.dependencies['continuation-local-storage'] = '~3.0.0';
 
             fixEbayGpaas(config);
 
